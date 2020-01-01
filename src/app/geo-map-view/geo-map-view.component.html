@@ -1,0 +1,14 @@
+<p-dataView [value]="geoMaps">
+    <p-header> <p-dataViewLayoutOptions></p-dataViewLayoutOptions></p-header>
+    <p-footer> <p-dataViewLayoutOptions></p-dataViewLayoutOptions></p-footer>
+    <ng-template let-geoMap pTemplate="listItem">
+        <div>
+            {{geoMap.name}}
+        </div>
+    </ng-template>
+    <ng-template let-geoMap pTemplate="gridItem">
+        <div class="ui-g-12 ui-md-3">
+            {{geoMap.name}}
+        </div>
+    </ng-template>
+</p-dataView>

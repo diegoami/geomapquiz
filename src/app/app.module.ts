@@ -11,12 +11,16 @@ import { DialogModule } from 'primeng/dialog';
 import { AppComponent } from './app.component';
 
 import {AppRoutingModule} from './app-routing/app-routing.module';
+import { GeoMapViewComponent } from './geo-map-view/geo-map-view.component';
+import {DataViewModule, DropdownModule, PanelModule, TabViewModule} from 'primeng';
+import {GeoMapService} from './services/geo-map-service';
 
 
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        GeoMapViewComponent
     ],
     imports: [
         BrowserModule,
@@ -24,12 +28,19 @@ import {AppRoutingModule} from './app-routing/app-routing.module';
         FormsModule,
         TableModule,
         HttpClientModule,
-        InputTextModule,
         DialogModule,
         ButtonModule,
-        AppRoutingModule
+        AppRoutingModule,
+        FormsModule,
+        DataViewModule,
+        PanelModule,
+        DialogModule,
+        DropdownModule,
+        TabViewModule,
+        ButtonModule,
+
     ],
-    providers: [],
+    providers: [HttpClientModule, GeoMapService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,12 @@
+{
+  "data": [
+    { "id": 1, "name": "Africa"},
+    { "id": 2, "name": "Asia"},
+    { "id": 3, "name": "China"},
+    { "id": 4, "name": "India"},
+    { "id": 5, "name": "Europe"},
+    { "id": 6, "name": "Austria"},
+    { "id": 7, "name": "Belgium"},
+    { "id": 8, "name":  "Croatia"}
+  ]
+}
