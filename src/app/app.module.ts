@@ -11,11 +11,14 @@ import { DialogModule } from 'primeng/dialog';
 import { AppComponent } from './app.component';
 import { CarPageComponent } from './car-page/car-page.component';
 import {AppRoutingModule} from './app-routing/app-routing.module';
+import { CarDashboardComponent } from './car-dashboard/car-dashboard.component';
+
 
 @NgModule({
     declarations: [
         AppComponent,
-        CarPageComponent
+        CarPageComponent,
+        CarDashboardComponent
     ],
     imports: [
         BrowserModule,
