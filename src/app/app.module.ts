@@ -9,10 +9,13 @@ import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
 
 import { AppComponent } from './app.component';
+import { CarPageComponent } from './car-page/car-page.component';
+import {AppRoutingModule} from './app-routing/app-routing.module';
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        CarPageComponent
     ],
     imports: [
         BrowserModule,
@@ -22,7 +25,8 @@ import { AppComponent } from './app.component';
         HttpClientModule,
         InputTextModule,
         DialogModule,
-        ButtonModule
+        ButtonModule,
+        AppRoutingModule
     ],
     providers: [],
     bootstrap: [AppComponent]
