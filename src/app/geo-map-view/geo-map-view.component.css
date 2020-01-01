@@ -2,7 +2,7 @@
     text-align: center;
 }
 
-.car-details {
+.geomap-details {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -10,16 +10,16 @@
     border-bottom: 1px solid #d9dad9;
 }
 
-.car-details > div {
+.geomap-details > div {
     display: flex;
     align-items: center;
 }
 
-.car-details > div img {
+.geomap-details > div img {
     margin-right: 14px;
 }
 
-.car-detail {
+.geomap-detail {
     padding: 0 1em 1em 1em;
     border-bottom: 1px solid #d9dad9;
     margin: 1em;
@@ -29,13 +29,13 @@
     padding: 1em;
 }
 
-.dark-theme :host ::ng-deep .car-details,
-.dark-theme :host ::ng-deep .car-detail {
+.dark-theme :host ::ng-deep .geomap-details,
+.dark-theme :host ::ng-deep .geomap-detail {
     border-bottom: 1px solid #191919;
 }
 
 @media (max-width: 1024px) {
-    .car-details img {
+    .geomap-details img {
         width: 75px;
     }
 

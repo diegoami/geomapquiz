@@ -1,4 +1,10 @@
 export interface GeoMap {
-    id?;
-    name?;
+    id: string;
+    name: string;
+    dir: string;
+    imgComp: string;
+    imgEmpty: string;
+    height: number;
+    width: number;
+    hotspotFiles: string[];
 }
