@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+
 import {ActivatedRoute} from '@angular/router';
 import {GeoMapService} from '../services/geo-map-service';
 import {GeoMap} from '../domain/geo-map';
+import {GeoMapCanvasComponent} from '../geo-map-canvas/geo-map-canvas.component';
 
 @Component({
   selector: 'app-geo-map-detail',
@@ -11,6 +13,9 @@ import {GeoMap} from '../domain/geo-map';
 export class GeoMapDetailComponent implements OnInit {
   private geoMap: GeoMap;
   hotspotFile: string;
+
+  @ViewChild('geoMapCanvas', {static: true})
+  geoMapCanvas: GeoMapCanvasComponent;
 
   constructor(
       private route: ActivatedRoute,

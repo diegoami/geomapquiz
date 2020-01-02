@@ -1,4 +1,7 @@
 <div *ngIf="geoMap && hotspotFile">
-  {{geoMap.name}} : {{hotspotFile}}
-  <app-geo-map-canvas [geoMap]="geoMap" [hotspotFile]="hotspotFile"></app-geo-map-canvas>
+
+  <p-card header="{{geoMap.name}}: {{hotspotFile}}" subheader="{{geoMapCanvas.currentHotspot}}">
+    <app-geo-map-canvas #geoMapCanvas [geoMap]="geoMap" [hotspotFile]="hotspotFile"></app-geo-map-canvas>
+  </p-card>
+
 </div>

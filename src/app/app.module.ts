@@ -12,7 +12,7 @@ import { AppComponent } from './app.component';
 
 import {AppRoutingModule} from './app-routing/app-routing.module';
 import { GeoMapViewComponent } from './geo-map-view/geo-map-view.component';
-import {DataViewModule, DropdownModule, PanelModule, TabViewModule} from 'primeng';
+import {CardModule, DataViewModule, DropdownModule, PanelModule, TabViewModule} from 'primeng';
 import {GeoMapService} from './services/geo-map-service';
 import { GeoMapDetailComponent } from './geo-map-detail/geo-map-detail.component';
 import { GeoMapCanvasComponent } from './geo-map-canvas/geo-map-canvas.component';
@@ -42,6 +42,7 @@ import { GeoMapCanvasComponent } from './geo-map-canvas/geo-map-canvas.component
         DropdownModule,
         TabViewModule,
         ButtonModule,
+        CardModule
 
     ],
     providers: [HttpClientModule, GeoMapService],

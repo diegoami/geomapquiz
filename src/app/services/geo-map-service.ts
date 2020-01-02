@@ -24,6 +24,6 @@ export class GeoMapService {
     }
 
     getMap(id: number) {
-        return this.getGeoMaps().then((data) => data[id]);
+        return this.getGeoMaps().then((data) => data.find((element) => element.id === id));
     }
 }

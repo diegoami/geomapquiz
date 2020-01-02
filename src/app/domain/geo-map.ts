@@ -1,5 +1,5 @@
 export interface GeoMap {
-    id: string;
+    id: number;
     name: string;
     dir: string;
     imgComp: string;
