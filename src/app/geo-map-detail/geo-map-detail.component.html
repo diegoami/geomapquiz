@@ -1,3 +1,4 @@
 <div *ngIf="geoMap && hotspotFile">
   {{geoMap.name}} : {{hotspotFile}}
+  <app-geo-map-canvas [geoMap]="geoMap" [hotspotFile]="hotspotFile"></app-geo-map-canvas>
 </div>

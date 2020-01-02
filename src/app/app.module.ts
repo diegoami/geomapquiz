@@ -15,6 +15,7 @@ import { GeoMapViewComponent } from './geo-map-view/geo-map-view.component';
 import {DataViewModule, DropdownModule, PanelModule, TabViewModule} from 'primeng';
 import {GeoMapService} from './services/geo-map-service';
 import { GeoMapDetailComponent } from './geo-map-detail/geo-map-detail.component';
+import { GeoMapCanvasComponent } from './geo-map-canvas/geo-map-canvas.component';
 
 
 
@@ -22,7 +23,8 @@ import { GeoMapDetailComponent } from './geo-map-detail/geo-map-detail.component
     declarations: [
         AppComponent,
         GeoMapViewComponent,
-        GeoMapDetailComponent
+        GeoMapDetailComponent,
+        GeoMapCanvasComponent
     ],
     imports: [
         BrowserModule,

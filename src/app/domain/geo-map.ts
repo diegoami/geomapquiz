@@ -8,3 +8,5 @@ export interface GeoMap {
     width: number;
     hotspotFiles: string[];
 }
+
+
