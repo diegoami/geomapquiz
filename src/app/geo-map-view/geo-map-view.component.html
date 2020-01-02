@@ -1,5 +1,19 @@
-<p-dataView [value]="geoMaps" [paginator]="true" [rows]="8" paginatorPosition="both" filterBy="name">
-    <p-header> <p-dataViewLayoutOptions></p-dataViewLayoutOptions></p-header>
+<p-dataView #dv [value]="geoMaps" [paginator]="true" [rows]="8" paginatorPosition="both" filterBy="name">
+    <p-header>
+
+        <div class="ui-helper-clearfix">
+            <div class="ui-g">
+                 <div class="ui-g-6 ui-md-4 filter-container">
+                    <div style="position:relative">
+                        <input type="search" pInputText placeholder="Search by name" (input)="dv.filter($event.target.value)">
+                    </div>
+                </div>
+                <div class="ui-g-6 ui-md-4" style="text-align:right">
+                    <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+                </div>
+            </div>
+        </div>
+    </p-header>
     <p-footer> <p-dataViewLayoutOptions></p-dataViewLayoutOptions></p-footer>
     <ng-template let-geoMap pTemplate="listItem">
         <div class="ui-g-12">
