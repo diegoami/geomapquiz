@@ -21,7 +21,7 @@
                 <div>
                     <img src="assets/maps/{{geoMap.dir}}{{geoMap.imgComp}}"  >
                     <div class="ui-g">
-                        <p-panel [header]="geoMap.name" [style]="{'text-align':'center'}">
+                        <p-panel header="{{geoMap.name}} {{geoMap.continent ? '('+geoMap.continent+')' : ''}}" [style]="{'text-align':'center'}">
                             <div class="geomap-detail" *ngFor="let hotspotFile of geoMap.hotspotFiles">
                                 <a href="geomapdetail/{{geoMap.name}}/{{hotspotFile}}">{{hotspotFile}}</a>
                             </div>
@@ -34,7 +34,7 @@
     </ng-template>
     <ng-template let-geoMap pTemplate="gridItem">
         <div class="ui-g-12 ui-md-3">
-            <p-panel [header]="geoMap.name" [style]="{'text-align':'center'}">
+            <p-panel header="{{geoMap.name}} {{geoMap.continent ? '('+geoMap.continent+')' : ''}}" [style]="{'text-align':'center'}">
                 <img class="geomap-grid" src="assets/maps/{{geoMap.dir}}{{geoMap.imgComp}}"  >
                 <div class="geomap-detail" *ngFor="let hotspotFile of geoMap.hotspotFiles">
                     <a href="geomapdetail/{{geoMap.name}}/{{hotspotFile}}">{{hotspotFile}}</a>
