@@ -7,10 +7,12 @@
                 <div>
                     <img src="assets/maps/{{geoMap.dir}}{{geoMap.imgComp}}"  >
                     <div class="ui-g">
-                        <div class="ui-g-12">Name: <b>{{geoMap.name}}</b></div>
-                        <ng-container *ngFor="let hotspotFile of geoMap.hotspotFiles">
-                            <div class="ui-g-12">Browse <b>{{hotspotFile}}</b></div>
-                        </ng-container>
+                        <p-panel [header]="geoMap.name" [style]="{'text-align':'center'}">
+                            <div class="geomap-detail" *ngFor="let hotspotFile of geoMap.hotspotFiles">
+                                <a href="geomapdetail/{{geoMap.id}}/{{hotspotFile}}">{{hotspotFile}}</a>
+                            </div>
+                        </p-panel>
+
                     </div>
                 </div>
             </div>
@@ -20,7 +22,9 @@
         <div class="ui-g-12 ui-md-3">
             <p-panel [header]="geoMap.name" [style]="{'text-align':'center'}">
                 <img class="geomap-grid" src="assets/maps/{{geoMap.dir}}{{geoMap.imgComp}}"  >
-                <div class="geomap-detail" *ngFor="let hotspotFile of geoMap.hotspotFiles">{{hotspotFile}}</div>
+                <div class="geomap-detail" *ngFor="let hotspotFile of geoMap.hotspotFiles">
+                    <a href="geomapdetail/{{geoMap.id}}/{{hotspotFile}}">{{hotspotFile}}</a>
+                </div>
             </p-panel>
         </div>
     </ng-template>

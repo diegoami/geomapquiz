@@ -14,13 +14,15 @@ import {AppRoutingModule} from './app-routing/app-routing.module';
 import { GeoMapViewComponent } from './geo-map-view/geo-map-view.component';
 import {DataViewModule, DropdownModule, PanelModule, TabViewModule} from 'primeng';
 import {GeoMapService} from './services/geo-map-service';
+import { GeoMapDetailComponent } from './geo-map-detail/geo-map-detail.component';
 
 
 
 @NgModule({
     declarations: [
         AppComponent,
-        GeoMapViewComponent
+        GeoMapViewComponent,
+        GeoMapDetailComponent
     ],
     imports: [
         BrowserModule,
