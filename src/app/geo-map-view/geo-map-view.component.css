@@ -17,6 +17,9 @@
 
 .geomap-details > div img {
     margin-right: 14px;
+    width: 300px;
+    height: auto;
+
 }
 
 .geomap-detail {
@@ -36,7 +39,7 @@
 
 @media (max-width: 1024px) {
     .geomap-details img {
-        width: 75px;
+        width: 200px;
     }
 
     .filter-container {

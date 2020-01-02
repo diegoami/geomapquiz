@@ -2,8 +2,18 @@
     <p-header> <p-dataViewLayoutOptions></p-dataViewLayoutOptions></p-header>
     <p-footer> <p-dataViewLayoutOptions></p-dataViewLayoutOptions></p-footer>
     <ng-template let-geoMap pTemplate="listItem">
-        <div>
-            {{geoMap.name}}
+        <div class="ui-g-12">
+            <div class="geomap-details">
+                <div>
+                    <img src="assets/maps/{{geoMap.dir}}{{geoMap.imgComp}}"  >
+                    <div class="ui-g">
+                        <div class="ui-g-12">Name: <b>{{geoMap.name}}</b></div>
+                        <ng-container *ngFor="let hotspotFile of geoMap.hotspotFiles">
+                            <div class="ui-g-12">Browse <b>{{hotspotFile}}</b></div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
         </div>
     </ng-template>
     <ng-template let-geoMap pTemplate="gridItem">
