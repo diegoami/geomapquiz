@@ -23,7 +23,7 @@
                     <div class="ui-g">
                         <p-panel [header]="geoMap.name" [style]="{'text-align':'center'}">
                             <div class="geomap-detail" *ngFor="let hotspotFile of geoMap.hotspotFiles">
-                                <a href="geomapdetail/{{geoMap.id}}/{{hotspotFile}}">{{hotspotFile}}</a>
+                                <a href="geomapdetail/{{geoMap.name}}/{{hotspotFile}}">{{hotspotFile}}</a>
                             </div>
                         </p-panel>
 
@@ -37,7 +37,7 @@
             <p-panel [header]="geoMap.name" [style]="{'text-align':'center'}">
                 <img class="geomap-grid" src="assets/maps/{{geoMap.dir}}{{geoMap.imgComp}}"  >
                 <div class="geomap-detail" *ngFor="let hotspotFile of geoMap.hotspotFiles">
-                    <a href="geomapdetail/{{geoMap.id}}/{{hotspotFile}}">{{hotspotFile}}</a>
+                    <a href="geomapdetail/{{geoMap.name}}/{{hotspotFile}}">{{hotspotFile}}</a>
                 </div>
             </p-panel>
         </div>

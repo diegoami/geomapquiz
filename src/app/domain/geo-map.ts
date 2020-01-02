@@ -1,6 +1,6 @@
 export interface GeoMap {
-    id: number;
     name: string;
+    continent: string;
     dir: string;
     imgComp: string;
     imgEmpty: string;

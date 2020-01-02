@@ -11,7 +11,7 @@ const routes: Routes = [
     component: GeoMapViewComponent,
   },
   {
-    path: 'geomapdetail/:id/:hotspotfile',
+    path: 'geomapdetail/:name/:hotspotfile',
     component: GeoMapDetailComponent
   }
 ];

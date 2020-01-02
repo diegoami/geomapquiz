@@ -23,7 +23,7 @@ export class GeoMapService {
         }
     }
 
-    getMap(id: number) {
-        return this.getGeoMaps().then((data) => data.find((element) => element.id === id));
+    getMap(name: string) {
+        return this.getGeoMaps().then((data) => data.find((element) => element.name === name));
     }
 }

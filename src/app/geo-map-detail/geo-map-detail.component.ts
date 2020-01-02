@@ -24,9 +24,9 @@ export class GeoMapDetailComponent implements OnInit {
 
   ngOnInit() {
     const that = this;
-    const id = +this.route.snapshot.paramMap.get('id');
+    const name = this.route.snapshot.paramMap.get('name');
     this.hotspotFile = this.route.snapshot.paramMap.get('hotspotfile')
-    this.mapService.getMap(id).then((geoMap) => this.geoMap = geoMap);
+    this.mapService.getMap(name).then((geoMap) => this.geoMap = geoMap);
 
   }
 
