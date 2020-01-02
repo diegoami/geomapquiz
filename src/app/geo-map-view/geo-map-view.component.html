@@ -1,4 +1,4 @@
-<p-dataView [value]="geoMaps">
+<p-dataView [value]="geoMaps" [paginator]="true" [rows]="8" paginatorPosition="both" filterBy="name">
     <p-header> <p-dataViewLayoutOptions></p-dataViewLayoutOptions></p-header>
     <p-footer> <p-dataViewLayoutOptions></p-dataViewLayoutOptions></p-footer>
     <ng-template let-geoMap pTemplate="listItem">
