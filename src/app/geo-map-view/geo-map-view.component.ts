@@ -27,6 +27,14 @@ export class GeoMapViewComponent implements OnInit {
   constructor(private geoMapService: GeoMapService) { }
 
   ngOnInit() {
+    this.sortOptions = [
+      {label: 'By Name Asc', value: 'name'},
+      {label: 'By Name Desc', value: '!name'},
+      {label: 'By Continent Asc', value: 'continent'},
+      {label: 'By Continent Desc', value: '!continent'}
+
+    ];
+
     this.geoMapService.getGeoMaps().then(
         geoMaps => this.geoMaps = geoMaps
     ).then(() => console.log(this.geoMaps));
@@ -41,5 +49,19 @@ export class GeoMapViewComponent implements OnInit {
   onDialogHide() {
     this.selectedGeoMap = null;
   }
+
+  onSortChange(event) {
+    let value = event.value;
+
+    if (value.indexOf('!') === 0) {
+      this.sortOrder = -1;
+      this.sortField = value.substring(1, value.length);
+    }
+    else {
+      this.sortOrder = 1;
+      this.sortField = value;
+    }
+  }
+
 
 }

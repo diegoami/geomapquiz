@@ -1,8 +1,11 @@
-<p-dataView #dv [value]="geoMaps" [paginator]="true" [rows]="8" paginatorPosition="both" filterBy="name">
+<p-dataView #dv [value]="geoMaps" [paginator]="true" [rows]="8" paginatorPosition="both" filterBy="name" [sortField]="sortField" [sortOrder]="sortOrder">
     <p-header>
 
         <div class="ui-helper-clearfix">
             <div class="ui-g">
+                <div class="ui-g-12 ui-md-4">
+                    <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By" (onChange)="onSortChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+                </div>
                  <div class="ui-g-6 ui-md-4 filter-container">
                     <div style="position:relative">
                         <input type="search" pInputText placeholder="Search by name" (input)="dv.filter($event.target.value)">
