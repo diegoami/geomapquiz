@@ -28,6 +28,11 @@
     margin: 1em;
 }
 
+.geomap-grid {
+    width: 100px;
+    height: auto;
+}
+
 .ui-panel-content {
     padding: 1em;
 }
@@ -40,6 +45,8 @@
 @media (max-width: 1024px) {
     .geomap-details img {
         width: 200px;
+        height: auto;
+
     }
 
     .filter-container {
