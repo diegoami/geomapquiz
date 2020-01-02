@@ -17,7 +17,6 @@ export class GeoMapCanvasComponent implements OnInit {
   private paths: Map<string, Path2D> = new Map<string, Path2D>();
   private currentPath: Path2D;
   hotspotList: HotspotList;
-//  hotspotList: HotspotList;
   scaling = 1;
 
   @Input('geoMap') geoMap: GeoMap;
@@ -36,13 +35,14 @@ export class GeoMapCanvasComponent implements OnInit {
     this.image = new Image();
     this.image.src = `assets/maps/${this.geoMap.dir}${this.geoMap.imgComp}`;
     this.loadImage();
-    this.loadHotspotsFromFile();
+
   }
 
   loadImage(): void {
     this.image.onload = () => {
       this.ctx.drawImage(this.image, 0, 0, this.geoMap.width, this.geoMap.height);
-      this.loadHotspotsInCanvas();
+      this.loadHotspotsFromFile();
+
     };
   }
 
@@ -52,6 +52,7 @@ export class GeoMapCanvasComponent implements OnInit {
         function (hotspotDefinition) {
           currentGeoMap.hotspotDefinition = hotspotDefinition;
           currentGeoMap.hotspotList = currentGeoMap.hotspotService.getHotspotList(currentGeoMap.hotspotDefinition);
+          currentGeoMap.loadHotspotsInCanvas();
         }
     );
   }
