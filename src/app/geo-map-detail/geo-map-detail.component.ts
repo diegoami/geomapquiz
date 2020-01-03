@@ -5,6 +5,7 @@ import {GeoMapService} from '../services/geo-map-service';
 import {GeoMap} from '../domain/geo-map';
 import {GeoMapCanvasComponent} from '../geo-map-canvas/geo-map-canvas.component';
 import {Button} from 'primeng';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-geo-map-detail',
@@ -22,6 +23,7 @@ export class GeoMapDetailComponent implements OnInit {
   constructor(
       private route: ActivatedRoute,
       private mapService: GeoMapService,
+      private router: Router
   ) { }
 
   ngOnInit() {
@@ -38,5 +40,9 @@ export class GeoMapDetailComponent implements OnInit {
 
     pbutton.icon = hiddenNames ? `pi pi-check` : `pi`;
     pbutton.label = hiddenNames ? `Show Names` : `Hide Names`;
+  }
+
+  goBack() {
+    this.router.navigateByUrl('');
   }
 }
