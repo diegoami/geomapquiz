@@ -69,6 +69,32 @@ export class GeoMapCanvasComponent implements OnInit {
     return this.hiddenNames;
   }
 
+  writeCurrentHotspotName(): void {
+    console.log('In writeCurrentHotspotName');
+    if (this.currentHotspot) {
+      this.ctx.font = '25px Verdana';
+      const bwidth = this.ctx.measureText(this.currentHotspot).width;
+
+      this.ctx.fillStyle = 'green';
+      const currentBoundingBox = this.bboxes.get(this.currentHotspot);
+      const spaceToRight = this.image.width - currentBoundingBox.right;
+      const spaceToLeft = currentBoundingBox.left;
+      const centerVerticalBoundingBox = (currentBoundingBox.bottom - currentBoundingBox.top) / 2 + currentBoundingBox.top;
+      const centerHorizontalBoundingBox = (currentBoundingBox.right - currentBoundingBox.left) / 2 + currentBoundingBox.left;
+      const startCaption = centerHorizontalBoundingBox - bwidth / 2;
+      // if (spaceToRight > spaceToLeft) {
+      //   this.ctx.fillText(this.currentHotspot, currentBoundingBox.right, centerBoundingBox);
+      //   console.log(`Writing ${this.currentHotspot} at ${currentBoundingBox.right}, ${centerBoundingBox}`);
+      // } else {
+      //   this.ctx.fillText(this.currentHotspot, currentBoundingBox.left - bwidth, centerBoundingBox);
+      //   console.log(`Writing ${this.currentHotspot} at ${currentBoundingBox.left - bwidth}, ${centerBoundingBox}`);
+      // }
+      //
+      this.ctx.fillText(this.currentHotspot, startCaption, centerVerticalBoundingBox);
+      this.ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+    }
+  }
+
   updateImageSrc() {
     console.log(`updateImageSrc: hiddenNames = ${this.hiddenNames}`);
     const current_img = this.hiddenNames ? this.geoMap.imgEmpty : this.geoMap.imgComp;
@@ -76,7 +102,11 @@ export class GeoMapCanvasComponent implements OnInit {
     this.ctx.drawImage(this.image, 0, 0, this.geoMap.width, this.geoMap.height);
     if (this.currentHotspot) {
       const currentPath = this.paths.get(this.currentHotspot);
+      this.ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
       this.ctx.fill(currentPath);
+      if (this.hiddenNames) {
+        this.writeCurrentHotspotName();
+      }
     }
   }
 
@@ -94,7 +124,6 @@ export class GeoMapCanvasComponent implements OnInit {
         this.paths.set(name, new Path2D());
         this.paths.get(name).arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
         this.ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
-//        this.ctx.fill(path2D)
         this.ctx.closePath();
         this.bboxes.set(name, new BoundingBox(centerX - radius, centerY - radius, centerX + radius, centerY + radius ));
       } else {
@@ -105,7 +134,7 @@ export class GeoMapCanvasComponent implements OnInit {
         this.paths.set(name, new Path2D());
         all_coords.forEach( (coord, index) => {
           const [x, y] = coord;
-          minX = min(minX, x), minY = min(minY, y), maxX = max(maxX, x), maxY = max(maxY, y);
+          minX = max(minX, x), minY = max(minY, y), maxX = min(maxX, x), maxY = min(maxY, y);
           if (index === 0) {
             this.paths.get(name).moveTo(x, y);
           } else {
@@ -114,6 +143,7 @@ export class GeoMapCanvasComponent implements OnInit {
         });
         this.paths.get(name).lineTo(all_coords[0][0], all_coords[0][1]);
         this.ctx.closePath();
+        console.log(name)
         this.bboxes.set(name, new BoundingBox(minX, minY, maxX, maxY));
       }
     }
@@ -132,6 +162,9 @@ export class GeoMapCanvasComponent implements OnInit {
         this.ctx.drawImage(this.image, 0, 0, this.geoMap.width, this.geoMap.height);
         this.currentHotspot = key;
         this.ctx.fill(path);
+        if (this.hiddenNames) {
+          this.writeCurrentHotspotName();
+        }
       }
     });
   }
