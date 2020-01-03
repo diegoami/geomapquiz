@@ -1,7 +1,13 @@
 <div *ngIf="geoMap && hotspotFile">
-
   <p-card header="{{geoMap.name}}: {{hotspotFile}}" subheader="{{geoMapCanvas.currentHotspot}}">
-    <app-geo-map-canvas #geoMapCanvas [geoMap]="geoMap" [hotspotFile]="hotspotFile"></app-geo-map-canvas>
+    <div>
+      <app-geo-map-canvas #geoMapCanvas [geoMap]="geoMap" [hotspotFile]="hotspotFile"></app-geo-map-canvas>
+    </div>
+    <p-footer>
+      <h3 class="implementation">
+        <p-button #hideButton icon="pi" label="Hide Names"  (onClick)="handleClick(geoMapCanvas, hideButton )"></p-button>
+      </h3>
+    </p-footer>
   </p-card>
 
 </div>

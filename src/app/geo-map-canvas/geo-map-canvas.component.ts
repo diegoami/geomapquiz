@@ -16,12 +16,14 @@ export class GeoMapCanvasComponent implements OnInit {
   private image: any;
   private paths: Map<string, Path2D> = new Map<string, Path2D>();
   private currentPath: Path2D;
+  private hiddenNames = false;
   hotspotList: HotspotList;
   scaling = 1;
 
   @Input('geoMap') geoMap: GeoMap;
   @Input('hotspotFile') hotspotFile: string;
   @Input('currentHotspot') currentHotspot: string;
+
 
   @ViewChild('canvas', {static: true})
   canvas: ElementRef<HTMLCanvasElement>;
@@ -56,6 +58,23 @@ export class GeoMapCanvasComponent implements OnInit {
         }
     );
   }
+
+  toggleEmptyChecked(): boolean {
+    this.hiddenNames = !this.hiddenNames;
+    return this.hiddenNames;
+  }
+
+  updateImageSrc() {
+    console.log(`updateImageSrc: hiddenNames = ${this.hiddenNames}`);
+    const current_img = this.hiddenNames ? this.geoMap.imgEmpty : this.geoMap.imgComp;
+    this.image.src = `assets/maps/${this.geoMap.dir}${current_img}`;
+    this.ctx.drawImage(this.image, 0, 0, this.geoMap.width, this.geoMap.height);
+    if (this.currentHotspot) {
+      const currentPath = this.paths.get(this.currentHotspot);
+      this.ctx.fill(currentPath);
+    }
+  }
+
   loadHotspotsInCanvas() {
     for (const obj of this.hotspotList.hotspots) {
       const hotspot: Hotspot = <Hotspot>obj;
@@ -66,14 +85,14 @@ export class GeoMapCanvasComponent implements OnInit {
         this.ctx.beginPath();
         this.paths.set(name, new Path2D());
         this.paths.get(name).arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
-        this.ctx.fillStyle = 'rgba(255, 255, 255, 0.5)'
+        this.ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
 //        this.ctx.fill(path2D)
         this.ctx.closePath();
 
       } else {
         const all_coords = hotspot.getCoords(1);
         this.ctx.beginPath();
-        this.ctx.fillStyle = 'rgba(255, 255, 255, 0.5)'
+        this.ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
         this.paths.set(name, new Path2D());
         all_coords.forEach( (coord, index) => {
           const [x, y] = coord;
@@ -89,17 +108,16 @@ export class GeoMapCanvasComponent implements OnInit {
     }
   }
 
+
+
   @HostListener('mousedown', ['$event'])
   onMouseDown(event) {
     const rect = event.target.getBoundingClientRect();
     const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top
-    console.log(`${x}, ${y}`);
+    const y = event.clientY - rect.top;
     this.currentHotspot = '';
     this.paths.forEach((path: Path2D, key: string) => {
-      console.log(`Trying ${key}`);
       if (this.ctx.isPointInPath(path, x, y, 'evenodd')) {
-        console.log(key);
         this.ctx.drawImage(this.image, 0, 0, this.geoMap.width, this.geoMap.height);
         this.currentHotspot = key;
         this.ctx.fill(path);

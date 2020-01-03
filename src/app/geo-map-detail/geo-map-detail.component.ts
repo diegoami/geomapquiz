@@ -1,9 +1,10 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 
 import {ActivatedRoute} from '@angular/router';
 import {GeoMapService} from '../services/geo-map-service';
 import {GeoMap} from '../domain/geo-map';
 import {GeoMapCanvasComponent} from '../geo-map-canvas/geo-map-canvas.component';
+import {Button} from 'primeng';
 
 @Component({
   selector: 'app-geo-map-detail',
@@ -16,6 +17,7 @@ export class GeoMapDetailComponent implements OnInit {
 
   @ViewChild('geoMapCanvas', {static: true})
   geoMapCanvas: GeoMapCanvasComponent;
+
 
   constructor(
       private route: ActivatedRoute,
@@ -30,4 +32,11 @@ export class GeoMapDetailComponent implements OnInit {
 
   }
 
+  handleClick(geoMapCanvas: GeoMapCanvasComponent, pbutton: Button ) {
+    const hiddenNames = geoMapCanvas.toggleEmptyChecked();
+    geoMapCanvas.updateImageSrc();
+
+    pbutton.icon = hiddenNames ? `pi pi-check` : `pi`;
+    pbutton.label = hiddenNames ? `Show Names` : `Hide Names`;
+  }
 }

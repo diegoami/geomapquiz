@@ -1,0 +1,19 @@
+.implementation {
+    background-color: #FFFFFF;
+    overflow: visible;
+    h3 {
+        margin-top: 30px;
+        color: #5C666A;
+        font-weight: 400;
+        font-size: 1.5em;
+    &:first-child {
+         margin-top: 0px !important;
+     }
+    }
+    h3.first {
+        margin-top: 0px !important;
+    }
+    h4 {
+        color: #5C666A;
+    }
+}
