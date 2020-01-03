@@ -3,19 +3,24 @@ import {GeoMap} from '../domain/geo-map';
 import {HotspotService} from '../hotspot.service';
 import {HotspotList} from '../domain/hotspotlist';
 import {Hotspot} from '../domain/hotspot';
+import {BoundingBox} from '../domain/bounding-box';
 
 @Component({
   selector: 'app-geo-map-canvas',
   templateUrl: './geo-map-canvas.component.html',
   styleUrls: ['./geo-map-canvas.component.css']
 })
+
+
+
 export class GeoMapCanvasComponent implements OnInit {
 
   private hotspotDefinition: string;
   private ctx: CanvasRenderingContext2D;
   private image: any;
   private paths: Map<string, Path2D> = new Map<string, Path2D>();
-  private currentPath: Path2D;
+  private bboxes: Map<string, ClientRect> = new Map<string, ClientRect>();
+
   private hiddenNames = false;
   hotspotList: HotspotList;
   scaling = 1;
@@ -76,6 +81,9 @@ export class GeoMapCanvasComponent implements OnInit {
   }
 
   loadHotspotsInCanvas() {
+    const min = Math.min;
+    const max = Math.max;
+
     for (const obj of this.hotspotList.hotspots) {
       const hotspot: Hotspot = <Hotspot>obj;
 
@@ -88,14 +96,16 @@ export class GeoMapCanvasComponent implements OnInit {
         this.ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
 //        this.ctx.fill(path2D)
         this.ctx.closePath();
-
+        this.bboxes.set(name, new BoundingBox(centerX - radius, centerY - radius, centerX + radius, centerY + radius ));
       } else {
         const all_coords = hotspot.getCoords(1);
+        let minX = 0, minY = 0, maxX = this.image.width, maxY = this.image.height;
         this.ctx.beginPath();
         this.ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
         this.paths.set(name, new Path2D());
         all_coords.forEach( (coord, index) => {
           const [x, y] = coord;
+          minX = min(minX, x), minY = min(minY, y), maxX = max(maxX, x), maxY = max(maxY, y);
           if (index === 0) {
             this.paths.get(name).moveTo(x, y);
           } else {
@@ -104,6 +114,7 @@ export class GeoMapCanvasComponent implements OnInit {
         });
         this.paths.get(name).lineTo(all_coords[0][0], all_coords[0][1]);
         this.ctx.closePath();
+        this.bboxes.set(name, new BoundingBox(minX, minY, maxX, maxY));
       }
     }
   }

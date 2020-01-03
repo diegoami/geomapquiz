@@ -17,3 +17,23 @@
         color: #5C666A;
     }
 }
+
+.content-section {
+    display: block;
+    padding: 30px;
+    overflow: hidden;
+    background-color: #f5f7f8;
+    &:first-of-type {
+        >div {
+            >span {
+                line-height: 1.5em;
+                &:last-child {
+                    font-size: 16px;
+                }
+            }
+        }
+    }
+    h2 {
+        margin-top: 0;
+    }
+}
