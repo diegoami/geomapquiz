@@ -31,7 +31,6 @@ export class GeoMapDetailComponent implements OnInit {
     const name = this.route.snapshot.paramMap.get('name');
     this.hotspotFile = this.route.snapshot.paramMap.get('hotspotfile')
     this.mapService.getMap(name).then((geoMap) => this.geoMap = geoMap);
-
   }
 
   handleClick(geoMapCanvas: GeoMapCanvasComponent, pbutton: Button ) {
