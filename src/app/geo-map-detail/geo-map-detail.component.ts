@@ -6,6 +6,7 @@ import {GeoMap} from '../domain/geo-map';
 import {GeoMapCanvasComponent} from '../geo-map-canvas/geo-map-canvas.component';
 import {Button} from 'primeng';
 import { Router } from '@angular/router';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-geo-map-detail',
@@ -23,7 +24,8 @@ export class GeoMapDetailComponent implements OnInit {
   constructor(
       private route: ActivatedRoute,
       private mapService: GeoMapService,
-      private router: Router
+      private router: Router,
+      private location: Location
   ) { }
 
   ngOnInit() {
@@ -42,6 +44,6 @@ export class GeoMapDetailComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigateByUrl('');
+    this.router.navigateByUrl('geomapview');
   }
 }

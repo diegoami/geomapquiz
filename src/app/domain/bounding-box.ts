@@ -11,7 +11,6 @@ export class BoundingBox implements ClientRect {
         this.top = top;
         this.right = right;
         this.bottom = bottom;
-        console.log(`Creating bounding box ${left}, ${top}, ${right}, ${bottom}`)
         this.width = this.right - this.left;
         this.height = this.top - this.bottom;
     }

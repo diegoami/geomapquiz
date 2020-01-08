@@ -13,7 +13,8 @@ import {CardModule, CheckboxModule, DataViewModule, DropdownModule, PanelModule,
 import {GeoMapService} from './services/geo-map-service';
 import { GeoMapDetailComponent } from './geo-map-detail/geo-map-detail.component';
 import { GeoMapCanvasComponent } from './geo-map-canvas/geo-map-canvas.component';
-
+import {PreferencesService} from './preferences/preferences.service';
+import {StorageServiceModule} from 'ngx-webstorage-service';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { GeoMapCanvasComponent } from './geo-map-canvas/geo-map-canvas.component
         TabViewModule,
         ButtonModule,
         CardModule,
-        CheckboxModule
+        CheckboxModule,
+        StorageServiceModule
     ],
     providers: [HttpClientModule, GeoMapService],
     bootstrap: [AppComponent]

@@ -7,7 +7,7 @@ import {GeoMapDetailComponent} from '../geo-map-detail/geo-map-detail.component'
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'geomapview',
     component: GeoMapViewComponent,
   },
   {
