@@ -10,7 +10,7 @@ import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
   templateUrl: './geo-map-view.component.html',
   styleUrls: ['./geo-map-view.component.css']
 })
-export class GeoMapViewComponent implements OnInit, AfterViewInit {
+export class GeoMapViewComponent implements OnInit {
 
   geoMaps: GeoMap[];
 
