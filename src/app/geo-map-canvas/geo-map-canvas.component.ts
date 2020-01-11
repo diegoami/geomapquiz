@@ -21,12 +21,13 @@ export class GeoMapCanvasComponent implements OnInit {
   private paths: Map<string, Path2D> = new Map<string, Path2D>();
   private bboxes: Map<string, ClientRect> = new Map<string, ClientRect>();
 
-  private hiddenNames = false;
-  private quizChecked = false;
+  hiddenNames = false;
+  quizChecked = false;
 
   private hotspotList: HotspotList;
   private currentHotspot: string;
   private quizHotspots: string[] = [];
+
 
 
   @Input('geoMap') geoMap: GeoMap;

@@ -18,6 +18,7 @@ export class GeoMapDetailComponent implements OnInit, AfterViewInit {
   hotspotFile: string;
   hide = 0;
   quiz = 0;
+  startVisible = false;
 
 
   @ViewChildren('geoMapCanvas')
@@ -59,6 +60,7 @@ export class GeoMapDetailComponent implements OnInit, AfterViewInit {
       if (this.route.snapshot.queryParamMap.get('quiz') === '1') {
         this.geoMapCanvas.toggleQuizChecked();
         this.geoMapCanvas.updateImageSrc();
+        this.startVisible = true;
       }
     });
     this.quizButtonQueryList.changes.subscribe((comps: QueryList<Button>) => {
@@ -91,8 +93,8 @@ export class GeoMapDetailComponent implements OnInit, AfterViewInit {
     console.log(`toggleQuiz: ${quizMode}`)
     pbutton.icon = quizMode ? `pi pi-check` : `pi`;
     pbutton.label = quizMode ? `Quiz` : `Browse`;
+    this.startVisible = quizMode;
   }
-
 
   goBack() {
     this.router.navigateByUrl('geomapview');

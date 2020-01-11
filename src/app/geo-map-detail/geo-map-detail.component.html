@@ -18,6 +18,11 @@
               <p-button #quizButton icon="pi" label="Browse"  (onClick)="toggleQuiz(geoMapCanvas, quizButton)"></p-button>
           </h3>
       </div>
+      <div class="p-col-1 " *ngIf="startVisible">
+          <h3>
+              <p-button #startQuiz label="Start" styleClass="ui-button-success"></p-button>
+          </h3>
+      </div>
   </div>
   <div class="p-grid">
       <app-geo-map-canvas #geoMapCanvas [geoMap]="geoMap" [hotspotFile]="hotspotFile"></app-geo-map-canvas>
