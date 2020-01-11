@@ -53,10 +53,6 @@ export class GeoMapDetailComponent implements OnInit, AfterViewInit {
   public ngAfterViewInit(): void {
     this.geoMapCanvasQueryList.changes.subscribe((comps: QueryList<GeoMapCanvasComponent>) => {
       this.geoMapCanvas = comps.first;
-      if (this.route.snapshot.queryParamMap.get('hide') === '1') {
-        this.geoMapCanvas.toggleEmptyChecked();
-        this.geoMapCanvas.updateImageSrc();
-      }
       if (this.route.snapshot.queryParamMap.get('quiz') === '1') {
         this.geoMapCanvas.toggleQuizChecked();
         this.geoMapCanvas.updateImageSrc();
@@ -70,21 +66,6 @@ export class GeoMapDetailComponent implements OnInit, AfterViewInit {
         this.quizButton.label = `Quiz`;
       }
     });
-    this.hideButtonQueryList.changes.subscribe((comps: QueryList<Button>) => {
-      this.hideButton = comps.first;
-      if (this.route.snapshot.queryParamMap.get('hide') === '1') {
-        this.hideButton.icon = `pi pi-check`;
-        this.hideButton.label = `Hide`;
-      }
-    });
-  }
-
-  toggleHide(geoMapCanvas: GeoMapCanvasComponent, pbutton: Button ) {
-    const hiddenNames = geoMapCanvas.toggleEmptyChecked();
-    geoMapCanvas.updateImageSrc();
-    console.log(`toggleHide: ${hiddenNames}`)
-    pbutton.icon = hiddenNames ? `pi pi-check` : `pi`;
-    pbutton.label = hiddenNames ? `Hide` : `Show`;
   }
 
   toggleQuiz(geoMapCanvas: GeoMapCanvasComponent, pbutton: Button ) {

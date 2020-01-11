@@ -83,16 +83,10 @@ export class GeoMapCanvasComponent implements OnInit {
     );
   }
 
-  toggleEmptyChecked(): boolean {
-    this.hiddenNames = !this.hiddenNames;
-    if (!this.hiddenNames) {
-      this.currentHotspot = undefined;
-    }
-    return this.hiddenNames;
-  }
 
   toggleQuizChecked(): boolean {
     this.quizChecked = !this.quizChecked;
+    this.hiddenNames = !this.hiddenNames;
     this.currentHotspot = undefined;
     this.quizHotspots = [];
     return this.quizChecked;
