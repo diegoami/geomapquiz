@@ -22,13 +22,14 @@ export class GeoMapCanvasComponent implements OnInit {
   private bboxes: Map<string, ClientRect> = new Map<string, ClientRect>();
 
   private hiddenNames = false;
-  hotspotList: HotspotList;
-  scaling = 1;
+  private quizChecked = false;
+
+  private hotspotList: HotspotList;
+  private currentHotspot: string;
+
 
   @Input('geoMap') geoMap: GeoMap;
   @Input('hotspotFile') hotspotFile: string;
-  @Input('currentHotspot') currentHotspot: string;
-
 
   @ViewChild('canvas', {static: true})
   canvas: ElementRef<HTMLCanvasElement>;
@@ -69,6 +70,11 @@ export class GeoMapCanvasComponent implements OnInit {
     return this.hiddenNames;
   }
 
+  toggleQuizChecked(): boolean {
+    this.quizChecked = !this.quizChecked;
+    return this.quizChecked;
+  }
+
   writeCurrentHotspotName(): void {
     console.log('In writeCurrentHotspotName');
     if (this.currentHotspot) {
@@ -77,19 +83,10 @@ export class GeoMapCanvasComponent implements OnInit {
 
       this.ctx.fillStyle = 'green';
       const currentBoundingBox = this.bboxes.get(this.currentHotspot);
-      const spaceToRight = this.image.width - currentBoundingBox.right;
-      const spaceToLeft = currentBoundingBox.left;
+
       const centerVerticalBoundingBox = (currentBoundingBox.bottom - currentBoundingBox.top) / 2 + currentBoundingBox.top;
       const centerHorizontalBoundingBox = (currentBoundingBox.right - currentBoundingBox.left) / 2 + currentBoundingBox.left;
       const startCaption = centerHorizontalBoundingBox - bwidth / 2;
-      // if (spaceToRight > spaceToLeft) {
-      //   this.ctx.fillText(this.currentHotspot, currentBoundingBox.right, centerBoundingBox);
-      //   console.log(`Writing ${this.currentHotspot} at ${currentBoundingBox.right}, ${centerBoundingBox}`);
-      // } else {
-      //   this.ctx.fillText(this.currentHotspot, currentBoundingBox.left - bwidth, centerBoundingBox);
-      //   console.log(`Writing ${this.currentHotspot} at ${currentBoundingBox.left - bwidth}, ${centerBoundingBox}`);
-      // }
-      //
       this.ctx.fillText(this.currentHotspot, startCaption, centerVerticalBoundingBox);
       this.ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
     }

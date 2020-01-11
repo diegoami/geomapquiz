@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 
 import {ActivatedRoute} from '@angular/router';
 import {GeoMapService} from '../services/geo-map-service';
@@ -6,7 +6,7 @@ import {GeoMap} from '../domain/geo-map';
 import {GeoMapCanvasComponent} from '../geo-map-canvas/geo-map-canvas.component';
 import {Button} from 'primeng';
 import { Router } from '@angular/router';
-import {Location} from '@angular/common';
+
 
 @Component({
   selector: 'app-geo-map-detail',
@@ -24,24 +24,31 @@ export class GeoMapDetailComponent implements OnInit {
   constructor(
       private route: ActivatedRoute,
       private mapService: GeoMapService,
-      private router: Router,
-      private location: Location
+      private router: Router
   ) { }
 
   ngOnInit() {
-    const that = this;
     const name = this.route.snapshot.paramMap.get('name');
     this.hotspotFile = this.route.snapshot.paramMap.get('hotspotfile')
     this.mapService.getMap(name).then((geoMap) => this.geoMap = geoMap);
   }
 
-  handleClick(geoMapCanvas: GeoMapCanvasComponent, pbutton: Button ) {
+  toggleHide(geoMapCanvas: GeoMapCanvasComponent, pbutton: Button ) {
     const hiddenNames = geoMapCanvas.toggleEmptyChecked();
     geoMapCanvas.updateImageSrc();
 
     pbutton.icon = hiddenNames ? `pi pi-check` : `pi`;
     pbutton.label = hiddenNames ? `Show Names` : `Hide Names`;
   }
+
+  toggleQuiz(geoMapCanvas: GeoMapCanvasComponent, pbutton: Button ) {
+    const quizMode = geoMapCanvas.toggleQuizChecked();
+    geoMapCanvas.updateImageSrc();
+
+    pbutton.icon = quizMode ? `pi pi-check` : `pi`;
+    pbutton.label = quizMode ? `Quiz Mode` : `Browse Mode`;
+  }
+
 
   goBack() {
     this.router.navigateByUrl('geomapview');
