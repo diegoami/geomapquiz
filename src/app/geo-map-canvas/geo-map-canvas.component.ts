@@ -28,7 +28,7 @@ export class GeoMapCanvasComponent implements OnInit {
   private currentHotspot: string;
   private quizHotspots: string[] = [];
 
-
+  availableHotspots: string[] = [];
 
   @Input('geoMap') geoMap: GeoMap;
   @Input('hotspotFile') hotspotFile: string;
@@ -56,8 +56,8 @@ export class GeoMapCanvasComponent implements OnInit {
       if (Object.keys(this.paths).length === 0 || Object.keys(this.bboxes).length === 0) {
         this.loadHotspotsFromFile();
       }
-      const hotspots_to_add = (this.quizHotspots.length > 0) ? this.quizHotspots : [this.currentHotspot];
-      for (const hotspot of hotspots_to_add) {
+      const hotspots_to_add = (this.quizChecked) ? this.quizHotspots : [this.currentHotspot];
+      hotspots_to_add.forEach((hotspot: string) => {
         if (hotspot) {
           console.log(`updatingHotspot: ${hotspot}`);
           const currentPath = this.paths.get(hotspot);
@@ -67,8 +67,7 @@ export class GeoMapCanvasComponent implements OnInit {
             this.writeCurrentHotspotName(hotspot);
           }
         }
-      }
-
+      });
     };
   }
 
@@ -153,6 +152,7 @@ export class GeoMapCanvasComponent implements OnInit {
         this.ctx.closePath();
         this.bboxes.set(name, new BoundingBox(minX, minY, maxX, maxY));
       }
+      this.availableHotspots.push(name);
     }
   }
 
@@ -163,15 +163,24 @@ export class GeoMapCanvasComponent implements OnInit {
     const rect = event.target.getBoundingClientRect();
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
-    this.currentHotspot = '';
     this.paths.forEach((path: Path2D, key: string) => {
       if (this.ctx.isPointInPath(path, x, y, 'evenodd')) {
         if (this.quizChecked) {
-          this.quizHotspots.push(key);
+          if (this.quizHotspots.includes(key)) {
+            const found_index = this.quizHotspots.indexOf(key);
+            this.quizHotspots.splice(found_index, 1);
+          } else {
+            this.quizHotspots.push(key);
+          }
+
         } else {
-          this.currentHotspot = key;
+          if (this.currentHotspot === key) {
+            this.currentHotspot = undefined;
+          } else {
+            this.currentHotspot = key;
+          }
         }
-        this.ctx.fill(path);
+
       }
     });
     this.updateImageSrc();

@@ -80,4 +80,8 @@ export class GeoMapDetailComponent implements OnInit, AfterViewInit {
   goBack() {
     this.router.navigateByUrl('geomapview');
   }
+
+  getLabel(): string {
+    return `${this.geoMap.name} - ${this.hotspotFile}`;
+  }
 }
