@@ -26,6 +26,7 @@ export class GeoMapCanvasComponent implements OnInit {
 
   private hotspotList: HotspotList;
   private currentHotspot: string;
+  private quizHotspots: string[] = [];
 
 
   @Input('geoMap') geoMap: GeoMap;
@@ -42,14 +43,30 @@ export class GeoMapCanvasComponent implements OnInit {
     this.ctx = this.canvas.nativeElement.getContext('2d');
     this.image = new Image();
     this.image.src = `assets/maps/${this.geoMap.dir}${this.geoMap.imgComp}`;
+    this.loadHotspotsFromFile();
     this.loadImage();
 
   }
 
   loadImage(): void {
     this.image.onload = () => {
+      console.log(`loading Image: ${this.geoMap.name}`)
       this.ctx.drawImage(this.image, 0, 0, this.geoMap.width, this.geoMap.height);
-      this.loadHotspotsFromFile();
+      if (Object.keys(this.paths).length === 0 || Object.keys(this.bboxes).length === 0) {
+        this.loadHotspotsFromFile();
+      }
+      const hotspots_to_add = (this.quizHotspots.length > 0) ? this.quizHotspots : [this.currentHotspot];
+      for (const hotspot of hotspots_to_add) {
+        if (hotspot) {
+          console.log(`updatingHotspot: ${hotspot}`);
+          const currentPath = this.paths.get(hotspot);
+          this.ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+          this.ctx.fill(currentPath);
+          if (this.hiddenNames) {
+            this.writeCurrentHotspotName(hotspot);
+          }
+        }
+      }
 
     };
   }
@@ -67,44 +84,43 @@ export class GeoMapCanvasComponent implements OnInit {
 
   toggleEmptyChecked(): boolean {
     this.hiddenNames = !this.hiddenNames;
+    if (!this.hiddenNames) {
+      this.currentHotspot = undefined;
+    }
     return this.hiddenNames;
   }
 
   toggleQuizChecked(): boolean {
     this.quizChecked = !this.quizChecked;
+    this.currentHotspot = undefined;
+    this.quizHotspots = [];
     return this.quizChecked;
   }
 
-  writeCurrentHotspotName(): void {
-    console.log('In writeCurrentHotspotName');
-    if (this.currentHotspot) {
+  writeCurrentHotspotName(hotspot: string): void {
+    console.log(`In writeCurrentHotspotName: ${hotspot}`);
+    if (hotspot) {
       this.ctx.font = '25px Verdana';
-      const bwidth = this.ctx.measureText(this.currentHotspot).width;
+      const bwidth = this.ctx.measureText(hotspot).width;
 
       this.ctx.fillStyle = 'green';
-      const currentBoundingBox = this.bboxes.get(this.currentHotspot);
+      const currentBoundingBox = this.bboxes.get(hotspot);
 
       const centerVerticalBoundingBox = (currentBoundingBox.bottom - currentBoundingBox.top) / 2 + currentBoundingBox.top;
       const centerHorizontalBoundingBox = (currentBoundingBox.right - currentBoundingBox.left) / 2 + currentBoundingBox.left;
       const startCaption = centerHorizontalBoundingBox - bwidth / 2;
-      this.ctx.fillText(this.currentHotspot, startCaption, centerVerticalBoundingBox);
+      this.ctx.fillText(hotspot, startCaption, centerVerticalBoundingBox);
       this.ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
     }
   }
 
   updateImageSrc() {
     console.log(`updateImageSrc: hiddenNames = ${this.hiddenNames}`);
+
     const current_img = this.hiddenNames ? this.geoMap.imgEmpty : this.geoMap.imgComp;
     this.image.src = `assets/maps/${this.geoMap.dir}${current_img}`;
-    this.ctx.drawImage(this.image, 0, 0, this.geoMap.width, this.geoMap.height);
-    if (this.currentHotspot) {
-      const currentPath = this.paths.get(this.currentHotspot);
-      this.ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
-      this.ctx.fill(currentPath);
-      if (this.hiddenNames) {
-        this.writeCurrentHotspotName();
-      }
-    }
+
+
   }
 
   loadHotspotsInCanvas() {
@@ -140,7 +156,6 @@ export class GeoMapCanvasComponent implements OnInit {
         });
         this.paths.get(name).lineTo(all_coords[0][0], all_coords[0][1]);
         this.ctx.closePath();
-        console.log(name)
         this.bboxes.set(name, new BoundingBox(minX, minY, maxX, maxY));
       }
     }
@@ -156,14 +171,15 @@ export class GeoMapCanvasComponent implements OnInit {
     this.currentHotspot = '';
     this.paths.forEach((path: Path2D, key: string) => {
       if (this.ctx.isPointInPath(path, x, y, 'evenodd')) {
-        this.ctx.drawImage(this.image, 0, 0, this.geoMap.width, this.geoMap.height);
-        this.currentHotspot = key;
-        this.ctx.fill(path);
-        if (this.hiddenNames) {
-          this.writeCurrentHotspotName();
+        if (this.quizChecked) {
+          this.quizHotspots.push(key);
+        } else {
+          this.currentHotspot = key;
         }
+        this.ctx.fill(path);
       }
     });
+    this.updateImageSrc();
   }
 
 }
