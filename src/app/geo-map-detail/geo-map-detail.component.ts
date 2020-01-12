@@ -16,9 +16,10 @@ import { Router } from '@angular/router';
 export class GeoMapDetailComponent implements OnInit, AfterViewInit {
   private geoMap: GeoMap;
   hotspotFile: string;
-  hide = 0;
   quiz = 0;
   startVisible = false;
+  hotspotToGuess = '';
+  mapDetailHeader = '';
 
 
   @ViewChildren('geoMapCanvas')
@@ -29,10 +30,6 @@ export class GeoMapDetailComponent implements OnInit, AfterViewInit {
   @ViewChildren('quizButton')
   public quizButtonQueryList: QueryList<Button>;
   private quizButton: Button;
-
-  @ViewChildren('hideButton')
-  public hideButtonQueryList: QueryList<Button>;
-  private hideButton: Button;
 
   constructor(
       private route: ActivatedRoute,
@@ -53,6 +50,7 @@ export class GeoMapDetailComponent implements OnInit, AfterViewInit {
   public ngAfterViewInit(): void {
     this.geoMapCanvasQueryList.changes.subscribe((comps: QueryList<GeoMapCanvasComponent>) => {
       this.geoMapCanvas = comps.first;
+      this.mapDetailHeader = `${this.geoMap.name} - ${this.hotspotFile}`;
       if (this.route.snapshot.queryParamMap.get('quiz') === '1') {
         this.geoMapCanvas.toggleQuizChecked();
         this.geoMapCanvas.updateImageSrc();
@@ -74,6 +72,7 @@ export class GeoMapDetailComponent implements OnInit, AfterViewInit {
     console.log(`toggleQuiz: ${quizMode}`)
     pbutton.icon = quizMode ? `pi pi-check` : `pi`;
     pbutton.label = quizMode ? `Quiz` : `Browse`;
+    this.mapDetailHeader = quizMode ? `` : `${this.geoMap.name} - ${this.hotspotFile}`;
     this.startVisible = quizMode;
   }
 
@@ -81,7 +80,22 @@ export class GeoMapDetailComponent implements OnInit, AfterViewInit {
     this.router.navigateByUrl('geomapview');
   }
 
-  getLabel(): string {
-    return `${this.geoMap.name} - ${this.hotspotFile}`;
+  startQuiz(): void {
+    this.hotspotToGuess = this.geoMapCanvas.startQuiz();
+    this.mapDetailHeader = this.hotspotToGuess;
+    this.geoMapCanvas.updateImageSrc();
+  }
+
+  onGuess(event): void {
+    const key = event;
+    console.log(`Guessed: ${key}`)
+    if (key === this.hotspotToGuess) {
+      console.log(`hotspot guessed: ${this.hotspotToGuess}`)
+      this.hotspotToGuess = this.geoMapCanvas.findHotspotNotSelected();
+      this.mapDetailHeader = this.hotspotToGuess;
+    } else {
+      console.log(`Removing hotspot: ${key}, should have guessed ${this.hotspotToGuess}`)
+      setTimeout(() => this.geoMapCanvas.removeHotspot(key), 500);
+    }
   }
 }

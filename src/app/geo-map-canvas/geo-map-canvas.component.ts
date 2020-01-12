@@ -1,4 +1,4 @@
-import {Component, ElementRef, HostListener, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {GeoMap} from '../domain/geo-map';
 import {HotspotService} from '../hotspot.service';
 import {HotspotList} from '../domain/hotspotlist';
@@ -21,20 +21,27 @@ export class GeoMapCanvasComponent implements OnInit {
   private paths: Map<string, Path2D> = new Map<string, Path2D>();
   private bboxes: Map<string, ClientRect> = new Map<string, ClientRect>();
 
-  hiddenNames = false;
+  private hiddenNames = false;
   quizChecked = false;
 
   private hotspotList: HotspotList;
   private currentHotspot: string;
   private quizHotspots: string[] = [];
 
-  availableHotspots: string[] = [];
+
+  private availableHotspots: string[] = [];
+  private redHotspots: string[] = [];
+  private selectedHotspots: string[] = [];
+
+  private toguessHotspot: string;
 
   @Input('geoMap') geoMap: GeoMap;
   @Input('hotspotFile') hotspotFile: string;
 
   @ViewChild('canvas', {static: true})
   canvas: ElementRef<HTMLCanvasElement>;
+
+  @Output() guess: EventEmitter<any> = new EventEmitter();
 
   constructor(
       private hotspotService: HotspotService
@@ -56,10 +63,9 @@ export class GeoMapCanvasComponent implements OnInit {
       if (Object.keys(this.paths).length === 0 || Object.keys(this.bboxes).length === 0) {
         this.loadHotspotsFromFile();
       }
-      const hotspots_to_add = (this.quizChecked) ? this.quizHotspots : [this.currentHotspot];
-      hotspots_to_add.forEach((hotspot: string) => {
+      this.selectedHotspots = (this.quizChecked) ? this.quizHotspots : [this.currentHotspot];
+      this.selectedHotspots.forEach((hotspot: string) => {
         if (hotspot) {
-          console.log(`updatingHotspot: ${hotspot}`);
           const currentPath = this.paths.get(hotspot);
           this.ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
           this.ctx.fill(currentPath);
@@ -91,13 +97,20 @@ export class GeoMapCanvasComponent implements OnInit {
     return this.quizChecked;
   }
 
+  startQuiz(): string {
+    this.currentHotspot = undefined;
+    this.quizHotspots = [];
+    const hotspot = this.findHotspotNotSelected();
+    return hotspot;
+  }
+
   writeCurrentHotspotName(hotspot: string): void {
     console.log(`In writeCurrentHotspotName: ${hotspot}`);
     if (hotspot) {
       this.ctx.font = '25px Verdana';
       const bwidth = this.ctx.measureText(hotspot).width;
 
-      this.ctx.fillStyle = 'green';
+      this.ctx.fillStyle = this.redHotspots.includes(hotspot) ? 'red' : 'green';
       const currentBoundingBox = this.bboxes.get(hotspot);
 
       const centerVerticalBoundingBox = (currentBoundingBox.bottom - currentBoundingBox.top) / 2 + currentBoundingBox.top;
@@ -163,6 +176,9 @@ export class GeoMapCanvasComponent implements OnInit {
     const rect = event.target.getBoundingClientRect();
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
+    this.redHotspots = [];
+    this.selectedHotspots = [];
+
     this.paths.forEach((path: Path2D, key: string) => {
       if (this.ctx.isPointInPath(path, x, y, 'evenodd')) {
         if (this.quizChecked) {
@@ -171,8 +187,13 @@ export class GeoMapCanvasComponent implements OnInit {
             this.quizHotspots.splice(found_index, 1);
           } else {
             this.quizHotspots.push(key);
-          }
+            console.log(`Emitting : ${key}`);
+            if (key !== this.toguessHotspot) {
+              this.redHotspots.push(key);
+            }
+            this.guess.emit(key);
 
+          }
         } else {
           if (this.currentHotspot === key) {
             this.currentHotspot = undefined;
@@ -184,6 +205,23 @@ export class GeoMapCanvasComponent implements OnInit {
       }
     });
     this.updateImageSrc();
+  }
+
+  removeHotspot(key: string) {
+    if (this.quizChecked) {
+      if (this.quizHotspots.includes(key)) {
+        const found_index = this.quizHotspots.indexOf(key);
+        this.quizHotspots.splice(found_index, 1);
+      }
+    }
+    this.updateImageSrc();
+  }
+
+  findHotspotNotSelected(): string {
+    const candidateHotspots = this.availableHotspots.filter(x => !this.quizHotspots.includes(x));
+    const randomHotspot = candidateHotspots[Math.floor(Math.random() * candidateHotspots.length)];
+    this.toguessHotspot = randomHotspot;
+    return randomHotspot;
   }
 
 }

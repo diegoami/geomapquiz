@@ -6,7 +6,7 @@
       </h3>
     </div>
     <div class="p-col-4">
-        <h2>{{getLabel()}}</h2>
+        <h2 [innerHtml]="mapDetailHeader"></h2>
     </div>
       <div class="p-col-1">
           <h3>
@@ -15,12 +15,12 @@
       </div>
       <div class="p-col-1 " *ngIf="startVisible">
           <h3>
-              <p-button #startQuiz label="Start" styleClass="ui-button-success"></p-button>
+              <p-button #startQuizButton label="Start" styleClass="ui-button-success" (click)="startQuiz()"></p-button>
           </h3>
       </div>
   </div>
   <div class="p-grid">
-      <app-geo-map-canvas #geoMapCanvas [geoMap]="geoMap" [hotspotFile]="hotspotFile"></app-geo-map-canvas>
+      <app-geo-map-canvas #geoMapCanvas [geoMap]="geoMap" [hotspotFile]="hotspotFile" (guess)="onGuess($event)" ></app-geo-map-canvas>
   </div>
 
 
