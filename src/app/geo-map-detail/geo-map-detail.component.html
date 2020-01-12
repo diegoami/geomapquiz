@@ -10,10 +10,10 @@
     </div>
       <div class="p-col-1">
           <h3>
-              <p-button #quizButton icon="pi" label="Browse"  (onClick)="toggleQuiz(geoMapCanvas, quizButton)"></p-button>
+              <p-button #quizButton icon="pi" label="Hidden"  (onClick)="toggleQuiz(geoMapCanvas, quizButton)"></p-button>
           </h3>
       </div>
-      <div class="p-col-1 " *ngIf="startVisible">
+      <div class="p-col-1">
           <h3>
               <p-button #startQuizButton label="Start" styleClass="ui-button-success" (click)="startQuiz()"></p-button>
           </h3>

@@ -71,7 +71,6 @@ export class GeoMapDetailComponent implements OnInit, AfterViewInit {
     geoMapCanvas.updateImageSrc();
     console.log(`toggleQuiz: ${quizMode}`)
     pbutton.icon = quizMode ? `pi pi-check` : `pi`;
-    pbutton.label = quizMode ? `Quiz` : `Browse`;
     this.mapDetailHeader = quizMode ? `` : `${this.geoMap.name} - ${this.hotspotFile}`;
     this.startVisible = quizMode;
   }
@@ -81,6 +80,10 @@ export class GeoMapDetailComponent implements OnInit, AfterViewInit {
   }
 
   startQuiz(): void {
+    if (!this.geoMapCanvas.quizChecked) {
+      this.toggleQuiz(this.geoMapCanvas, this.quizButton);
+    }
+
     this.hotspotToGuess = this.geoMapCanvas.startQuiz();
     this.mapDetailHeader = this.hotspotToGuess;
     this.geoMapCanvas.updateImageSrc();

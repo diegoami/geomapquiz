@@ -74,6 +74,9 @@ export class GeoMapCanvasComponent implements OnInit {
           }
         }
       });
+      if (this.quizChecked && this.toguessHotspot) {
+        this.writeToGuessHotspot();
+      }
     };
   }
 
@@ -104,8 +107,15 @@ export class GeoMapCanvasComponent implements OnInit {
     return hotspot;
   }
 
+  writeToGuessHotspot(): void {
+    this.ctx.fillStyle = 'white';
+    this.ctx.font = '40px Verdana';
+
+    this.ctx.fillText(this.toguessHotspot.toUpperCase(), this.geoMap.width * 7 / 12 , 100);
+    this.ctx.fillText(this.toguessHotspot.toUpperCase(), 10, this.geoMap.height - 200);
+  }
+
   writeCurrentHotspotName(hotspot: string): void {
-    console.log(`In writeCurrentHotspotName: ${hotspot}`);
     if (hotspot) {
       this.ctx.font = '25px Verdana';
       const bwidth = this.ctx.measureText(hotspot).width;
@@ -169,8 +179,6 @@ export class GeoMapCanvasComponent implements OnInit {
     }
   }
 
-
-
   @HostListener('mousedown', ['$event'])
   onMouseDown(event) {
     const rect = event.target.getBoundingClientRect();
@@ -219,9 +227,12 @@ export class GeoMapCanvasComponent implements OnInit {
 
   findHotspotNotSelected(): string {
     const candidateHotspots = this.availableHotspots.filter(x => !this.quizHotspots.includes(x));
-    const randomHotspot = candidateHotspots[Math.floor(Math.random() * candidateHotspots.length)];
-    this.toguessHotspot = randomHotspot;
-    return randomHotspot;
+    if (candidateHotspots.length > 0) {
+      this.toguessHotspot = candidateHotspots[Math.floor(Math.random() * candidateHotspots.length)];
+    } else {
+      this.toguessHotspot = '';
+    }
+    return this.toguessHotspot;
   }
 
 }
