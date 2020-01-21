@@ -7,6 +7,8 @@ export interface GeoMap {
     height: number;
     width: number;
     hotspotFiles: string[];
+    hotspotColor: string;
+    hotspotLocations: number[][];
 }
 
 

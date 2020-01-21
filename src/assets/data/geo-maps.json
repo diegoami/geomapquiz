@@ -1,41 +1,142 @@
 {
   "data": [
-  { "name": "Africa",  "continent":  "", "dir" : "Africa/", "imgComp" : "Africa.jpg", "imgEmpty" : "Africm.jpg", "height" : 1051, "width" : 1038, "hotspotFiles": ["countries", "towns", "rivers"]},
-  {  "name": "Asia",  "continent":  "", "dir" : "Asia/", "imgComp" : "Asia.jpg", "imgEmpty" : "Asim.jpg", "height" : 1316, "width" : 1062, "hotspotFiles": ["countries", "towns", "rivers"]},
-  {  "name": "China", "continent": "Asia", "dir" : "Asia/China/", "imgComp" : "China.jpg", "imgEmpty" : "Chinm.jpg", "height" : 956, "width" : 978, "hotspotFiles": ["regions", "towns"]},
-  {  "name": "India", "continent": "Asia", "dir" : "Asia/India/", "imgComp" : "India.jpg", "imgEmpty" : "Indim.jpg", "height" : 1288, "width" : 1084, "hotspotFiles": ["regions", "towns", "rivers"]},
-  {  "name": "Japan1", "continent": "Asia", "dir" : "Asia/Japan1/", "imgComp" : "japan.jpg", "imgEmpty" : "japam.jpg", "height": 1312, "width" : 1080, "hotspotFiles": ["towns"]},
-  {  "name": "Japan2", "continent": "Asia", "dir" : "Asia/Japan2/", "imgComp" : "japan.jpg", "imgEmpty" : "japam.jpg", "height": 1306, "width" : 1080, "hotspotFiles": ["regions", "towns"]},
-  {  "name":  "Middle_East", "continent": "",  "dir" : "Middle_East/", "imgComp" : "Middle_East.jpg", "imgEmpty" : "Middle_Easm.jpg", "height": 1227, "width" : 1053, "hotspotFiles": ["countries", "towns", "rivers"]},
+  { "name": "Africa",  "continent":  "", "dir" : "Africa/", "imgComp" : "Africa.jpg", "imgEmpty" : "Africm.jpg", "height" : 1051, "width" : 1038, "hotspotFiles": ["countries", "towns", "rivers"],
+    "hotspotColor": "black",
+    "hotspotLocations": [[9, 11], [56, 841] ] },
+  {  "name": "Asia",  "continent":  "", "dir" : "Asia/", "imgComp" : "Asia.jpg", "imgEmpty" : "Asim.jpg", "height" : 1316, "width" : 1062, "hotspotFiles": ["countries", "towns", "rivers"],
+    "hotspotColor": "black",
+    "hotspotLocations": [[295, 15], [239, 1073] ] },
+  {  "name": "China", "continent": "Asia", "dir" : "Asia/China/", "imgComp" : "China.jpg", "imgEmpty" : "Chinm.jpg", "height" : 956, "width" : 978, "hotspotFiles": ["regions", "towns"],
+    "hotspotColor": "darkgreen",
+    "hotspotLocations": [[28, 77], [439, 866] ] },
+  {  "name": "India", "continent": "Asia", "dir" : "Asia/India/", "imgComp" : "India.jpg", "imgEmpty" : "Indim.jpg", "height" : 1288, "width" : 1084, "hotspotFiles": ["regions", "towns", "rivers"],
+    "hotspotColor": "darkgreen",
+    "hotspotLocations": [[82, 112], [433, 971] ] },
+  {  "name": "Japan1", "continent": "Asia", "dir" : "Asia/Japan1/", "imgComp" : "japan.jpg", "imgEmpty" : "japam.jpg", "height": 1312, "width" : 1080, "hotspotFiles": ["towns"],
+    "hotspotColor": "black",
+    "hotspotLocations": [[302, 349], [544, 801] ] },
+  {  "name": "Japan2", "continent": "Asia", "dir" : "Asia/Japan2/", "imgComp" : "japan.jpg", "imgEmpty" : "japam.jpg", "height": 1306, "width" : 1080, "hotspotFiles": ["regions", "towns"],
+    "hotspotColor": "black",
+    "hotspotLocations": [[1080, 1306], [300, 333] ] },
+    {  "name":  "Middle_East", "continent": "",  "dir" : "Middle_East/", "imgComp" : "Middle_East.jpg", "imgEmpty" : "Middle_Easm.jpg", "height": 1227, "width" : 1053, "hotspotFiles": ["countries", "towns", "rivers"],
+    "hotspotColor": "black",
+    "hotspotLocations": [[195, 51], [670, 993] ] },
 
-  {  "name": "Europe", "continent": "", "dir" : "Europe/", "imgComp" : "europe.jpg", "imgEmpty" : "europm.jpg", "height" : 1364, "width": 1054, "hotspotFiles": ["countries", "towns", "rivers"]},
-  {  "name": "Austria", "continent": "Europe", "dir" : "Europe/Austria/", "imgComp" : "Austria.jpg", "imgEmpty" : "Austrim.jpg", "height": 1105, "width" : 1563, "hotspotFiles": ["regions", "towns", "rivers"]},
-  {  "name": "Belgium", "continent": "Europe", "dir" : "Europe/Belgium/", "imgComp" : "belgio.jpg", "imgEmpty" : "belgim.jpg", "height": 1090, "width" : 1002, "hotspotFiles": ["regions", "towns", "rivers"]},
-  {  "name":  "Croatia", "continent": "Europe", "dir" : "Europe/Croatia/", "imgComp" : "croatia.jpg", "imgEmpty" : "croatim.jpg", "height": 1216, "width" : 1036, "hotspotFiles": ["regions", "towns", "islands"]},
-  {  "name":  "CzechRepublic", "continent": "Europe",  "dir" : "Europe/CzechRepublic/", "imgComp" : "CzechRepublic.jpg", "imgEmpty" : "CzechRepublim.jpg", "height": 1477, "width" : 1381, "hotspotFiles": ["regions", "towns", "rivers"]},
-  {  "name":  "Denmark", "continent": "Europe", "dir" : "Europe/Denmark/", "imgComp" : "Denmark.jpg", "imgEmpty" : "Denmarm.jpg", "height": 1154, "width" : 1406, "hotspotFiles": ["regions", "towns", "rivers"]},
-  {  "name":  "Finland", "continent": "Europe", "dir" : "Europe/Finland/", "imgComp" : "Finland.jpg", "imgEmpty" : "Finlanm.jpg", "height": 1190, "width" : 980, "hotspotFiles": ["regions", "towns"]},
-  {  "name":  "France", "continent": "Europe", "dir" : "Europe/France/", "imgComp" : "France.jpg", "imgEmpty" : "Francm.jpg", "height": 920, "width" : 930, "hotspotFiles": ["regions", "towns", "rivers"]},
-  {  "name":  "Germany", "continent": "Europe", "dir" : "Europe/Germany/", "imgComp" : "Germany.jpg", "imgEmpty" : "Germanm.jpg", "height": 1600, "width" : 1309, "hotspotFiles": ["regions", "towns", "rivers"]},
-  {  "name":  "Greece", "continent": "Europe", "dir" : "Europe/Greece/", "imgComp" : "greece.jpg", "imgEmpty" : "greecm.jpg", "height": 1054, "width" : 1098, "hotspotFiles": [ "towns", "islands"]},
-  {  "name":  "Italy", "continent": "Europe", "dir" : "Europe/Italy/", "imgComp" : "Italy.jpg", "imgEmpty" : "Italm.jpg", "height": 1221, "width" : 983, "hotspotFiles": ["regions", "towns", "rivers"]},
-  {  "name":  "Netherlands", "continent": "Europe", "dir" : "Europe/Netherlands/", "imgComp" : "Netherlands.jpg", "imgEmpty" : "Netherlandm.jpg", "height": 1148, "width" : 1008, "hotspotFiles": ["regions", "towns"]},
-  {  "name":  "Norway", "continent": "Europe", "dir" : "Europe/Norway/", "imgComp" : "Norway.jpg", "imgEmpty" : "Norwam.jpg", "height": 1220, "width" : 980, "hotspotFiles": ["regions", "towns", "rivers"]},
-  {  "name":  "Poland", "continent": "Europe", "dir" : "Europe/Poland/", "imgComp" : "poland.jpg", "imgEmpty" : "polanm.jpg" , "height": 844, "width" : 848, "hotspotFiles": ["regions", "towns", "rivers"]},
-  {  "name":  "Romania", "continent": "Europe", "dir" : "Europe/Romania/", "imgComp" : "romania.jpg", "imgEmpty" : "romanim.jpg" , "height": 1192, "width" : 1112, "hotspotFiles": ["regions", "towns"]},
-  {  "name":  "Russia", "continent": "Europe", "dir" : "Europe/Russia/", "imgComp" : "russia.jpg", "imgEmpty" : "russim.jpg", "height": 1104, "width" : 1620, "hotspotFiles": ["towns", "rivers"]},
-  {  "name":  "Spain", "continent": "Europe", "dir" : "Europe/Spain/", "imgComp" : "Spain.jpg", "imgEmpty" : "Spaim.jpg" , "height": 902, "width" : 1131, "hotspotFiles": ["regions", "towns", "rivers"]},
-  {  "name":  "Sweden", "continent": "Europe", "dir" : "Europe/Sweden/", "imgComp" : "sweden.jpg", "imgEmpty" : "swedem.jpg" , "height": 1228, "width" : 988, "hotspotFiles": ["regions", "towns", "rivers"]},
-  {  "name":  "Ukraine", "continent": "Europe",  "dir" : "Europe/Ukraine/", "imgComp" : "ukraine.jpg", "imgEmpty" : "ukrainm.jpg", "height": 1045, "width" : 1000, "hotspotFiles": ["regions", "towns", "rivers"]},
-  {  "name":  "UnitedKingdom", "continent": "Europe",  "dir" : "Europe/UnitedKingdom/", "imgComp" : "uk.jpg", "imgEmpty" : "um.jpg", "height": 1216, "width" : 1000, "hotspotFiles": ["regions", "towns"]},
-  {  "name":  "UnitedKingdom2", "continent": "Europe", "dir" : "Europe/UnitedKingdom2/", "imgComp" : "uk2.jpg", "imgEmpty" : "ukm.jpg", "height": 1221, "width" : 1027, "hotspotFiles": ["regions", "towns", "rivers"]},
-  {  "name":  "North_America", "continent": "", "dir" : "North_America/", "imgComp" : "North_America.jpg", "imgEmpty" : "North_Americm.jpg", "height": 1356, "width" : 1062, "hotspotFiles": ["countries", "towns", "rivers"]},
-  {  "name":  "Canada", "continent": "North_America", "dir" : "North_America/Canada/", "imgComp" : "Canada.jpg", "imgEmpty" : "Canadm.jpg", "height": 920, "width" : 980, "hotspotFiles": ["regions", "towns", "rivers"]},
-  {  "name":  "Mexico", "continent": "North_America", "dir" : "North_America/Mexico/", "imgComp" : "mexico.jpg", "imgEmpty" : "mexicm.jpg", "height": 981, "width" : 1200, "hotspotFiles": ["regions", "towns", "rivers"]},
-  {  "name":  "USA", "continent": "North_America", "dir" : "North_America/USA/", "imgComp" : "usa.jpg", "imgEmpty" : "usm.jpg", "height": 993,  "width" : 1350, "hotspotFiles": ["regions", "towns", "rivers"]},
-  {  "name":  "Australia", "continent": "Oceania", "dir" : "Oceania/Australia/", "imgComp" : "Australia.jpg", "imgEmpty" : "Australim.jpg", "height": 1101,  "width" : 1025, "hotspotFiles": ["regions", "towns", "rivers"]},
-  {  "name":  "South_America", "continent": "", "dir" : "South_America/", "imgComp" : "South_America.jpg", "imgEmpty" : "South_Americm.jpg", "height": 1348, "width" : 1062, "hotspotFiles": ["countries", "towns", "rivers"]},
-  {  "name":  "Argentina", "continent": "South_America", "dir" : "South_America/Argentina/", "imgComp" : "Argentina.jpg", "imgEmpty" : "Argentinm.jpg", "height": 1302, "width" : 1068, "hotspotFiles": ["regions", "towns"]},
-  {  "name":  "Brazil", "continent": "South_America", "dir" : "South_America/Brazil/", "imgComp" : "Brazil.jpg", "imgEmpty" : "Brazim.jpg", "height": 1430, "width" : 1307, "hotspotFiles": ["regions", "towns", "rivers"]}
+  {  "name": "Europe", "continent": "", "dir" : "Europe/", "imgComp" : "europe.jpg", "imgEmpty" : "europm.jpg", "height" : 1364, "width": 1054, "hotspotFiles": ["countries", "towns", "rivers"],
+    "hotspotColor": "black",
+    "hotspotLocations": [[230, 218], [608, 1300] ] },
+
+  {  "name": "Austria", "continent": "Europe", "dir" : "Europe/Austria/", "imgComp" : "Austria.jpg", "imgEmpty" : "Austrim.jpg", "height": 1105, "width" : 1563, "hotspotFiles": ["regions", "towns", "rivers"],
+     "hotspotColor": "green",
+    "hotspotLocations": [[437, 164], [1048, 830]]  },
+  {  "name": "Belgium", "continent": "Europe", "dir" : "Europe/Belgium/", "imgComp" : "belgio.jpg", "imgEmpty" : "belgim.jpg", "height": 1090, "width" : 1002, "hotspotFiles": ["regions", "towns", "rivers"],
+    "hotspotColor": "darkgreen",
+    "hotspotLocations": [[29, 167], [332, 842]]
+  },
+  {  "name":  "Croatia", "continent": "Europe", "dir" : "Europe/Croatia/", "imgComp" : "croatia.jpg", "imgEmpty" : "croatim.jpg", "height": 1216, "width" : 1036, "hotspotFiles": ["regions", "towns", "islands"]
+  ,
+    "hotspotColor": "darkgreen",
+    "hotspotLocations": [[30, 644], [315, 937]]
+  },
+  {  "name":  "CzechRepublic", "continent": "Europe",  "dir" : "Europe/CzechRepublic/", "imgComp" : "CzechRepublic.jpg", "imgEmpty" : "CzechRepublim.jpg", "height": 1477, "width" : 1381, "hotspotFiles": ["regions", "towns", "rivers"],
+    "hotspotColor": "darkgreen",
+    "hotspotLocations": [[202, 215], [465, 1189]]
+  },
+  {  "name":  "Denmark", "continent": "Europe", "dir" : "Europe/Denmark/", "imgComp" : "Denmark.jpg", "imgEmpty" : "Denmarm.jpg", "height": 1154, "width" : 1406, "hotspotFiles": ["regions", "towns", "rivers"],
+    "hotspotColor": "black",
+    "hotspotLocations": [[131, 115], [903, 846]]
+  },
+  {  "name":  "Finland", "continent": "Europe", "dir" : "Europe/Finland/", "imgComp" : "Finland.jpg", "imgEmpty" : "Finlanm.jpg", "height": 1190, "width" : 980, "hotspotFiles": ["regions", "towns"],
+    "hotspotColor": "darkgreen",
+    "hotspotLocations": [[46, 580], [177, 1138]]
+  },
+  {  "name":  "France", "continent": "Europe", "dir" : "Europe/France/", "imgComp" : "France.jpg", "imgEmpty" : "Francm.jpg", "height": 920, "width" : 930, "hotspotFiles": ["regions", "towns", "rivers"],
+    "hotspotColor": "darkgreen",
+    "hotspotLocations": [[29, 135], [518, 801]]
+  },
+  {  "name":  "Germany", "continent": "Europe", "dir" : "Europe/Germany/", "imgComp" : "Germany.jpg", "imgEmpty" : "Germanm.jpg", "height": 1600, "width" : 1309, "hotspotFiles": ["regions", "towns", "rivers"],
+    "hotspotColor": "darkgreen",
+    "hotspotLocations": [[884, 191], [918, 1148]]
+    },
+  {  "name":  "Greece", "continent": "Europe", "dir" : "Europe/Greece/", "imgComp" : "greece.jpg", "imgEmpty" : "greecm.jpg", "height": 1054, "width" : 1098, "hotspotFiles": [ "towns", "islands"],
+    "hotspotColor": "darkgreen",
+    "hotspotLocations": [[432, 346], [459, 757]]
+  },
+  {  "name":  "Italy", "continent": "Europe", "dir" : "Europe/Italy/", "imgComp" : "Italy.jpg", "imgEmpty" : "Italm.jpg", "height": 1221, "width" : 983, "hotspotFiles": ["regions", "towns", "rivers"],
+    "hotspotColor": "darkgreen",
+    "hotspotLocations": [[575, 29], [258, 748]]
+  },
+  {  "name":  "Netherlands", "continent": "Europe", "dir" : "Europe/Netherlands/", "imgComp" : "Netherlands.jpg", "imgEmpty" : "Netherlandm.jpg", "height": 1148, "width" : 1008, "hotspotFiles": ["regions", "towns"],
+    "hotspotColor": "darkgreen",
+    "hotspotLocations": [[316, 25], [40, 955]]
+  },
+  {  "name":  "Norway", "continent": "Europe", "dir" : "Europe/Norway/", "imgComp" : "Norway.jpg", "imgEmpty" : "Norwam.jpg", "height": 1220, "width" : 980, "hotspotFiles": ["regions", "towns", "rivers"],
+    "hotspotColor": "darkgreen",
+    "hotspotLocations": [[304, 47], [498, 1122]]
+  },
+  {  "name":  "Poland", "continent": "Europe", "dir" : "Europe/Poland/", "imgComp" : "poland.jpg", "imgEmpty" : "polanm.jpg" , "height": 844, "width" : 848, "hotspotFiles": ["regions", "towns", "rivers"],
+    "hotspotColor": "darkgreen",
+    "hotspotLocations": [[501, 16], [360, 784]]
+  },
+  {  "name":  "Romania", "continent": "Europe", "dir" : "Europe/Romania/", "imgComp" : "romania.jpg", "imgEmpty" : "romanim.jpg" , "height": 1192, "width" : 1112, "hotspotFiles": ["regions", "towns"],
+    "hotspotColor": "darkgreen",
+    "hotspotLocations": [[88, 85], [80, 822]]
+  },
+  {  "name":  "Russia", "continent": "Europe", "dir" : "Europe/Russia/", "imgComp" : "russia.jpg", "imgEmpty" : "russim.jpg", "height": 1104, "width" : 1620, "hotspotFiles": ["towns", "rivers"],
+    "hotspotColor": "darkgreen",
+    "hotspotLocations": [[181, 45], [109, 991]]
+  },
+  {  "name":  "Spain", "continent": "Europe", "dir" : "Europe/Spain/", "imgComp" : "Spain.jpg", "imgEmpty" : "Spaim.jpg" , "height": 902, "width" : 1131, "hotspotFiles": ["regions", "towns", "rivers"],
+    "hotspotColor": "darkgreen",
+    "hotspotLocations": [[276, 5], [464, 812]]
+  },
+  {  "name":  "Sweden", "continent": "Europe", "dir" : "Europe/Sweden/", "imgComp" : "sweden.jpg", "imgEmpty" : "swedem.jpg" , "height": 1228, "width" : 988, "hotspotFiles": ["regions", "towns", "rivers"],
+    "hotspotColor": "darkgreen",
+    "hotspotLocations": [[306, 15], [452, 1151]]
+  },
+  {  "name":  "Ukraine", "continent": "Europe",  "dir" : "Europe/Ukraine/", "imgComp" : "ukraine.jpg", "imgEmpty" : "ukrainm.jpg", "height": 1045, "width" : 1000, "hotspotFiles": ["regions", "towns", "rivers"],
+    "hotspotColor": "darkgreen",
+    "hotspotLocations": [[201, 125], [401, 851]]
+  },
+  {  "name":  "UnitedKingdom", "continent": "Europe",  "dir" : "Europe/UnitedKingdom/", "imgComp" : "uk.jpg", "imgEmpty" : "um.jpg", "height": 1216, "width" : 1000, "hotspotFiles": ["regions", "towns"],
+    "hotspotColor": "darkgreen",
+    "hotspotLocations": [[212, 44], [25, 1134]]
+  },
+  {  "name":  "UnitedKingdom2", "continent": "Europe", "dir" : "Europe/UnitedKingdom2/", "imgComp" : "uk2.jpg", "imgEmpty" : "ukm.jpg", "height": 1221, "width" : 1027, "hotspotFiles": ["regions", "towns", "rivers"],
+    "hotspotColor": "darkgreen",
+    "hotspotLocations": [[208, 36], [25, 1136]]
+  },
+  {  "name":  "North_America", "continent": "", "dir" : "North_America/", "imgComp" : "North_America.jpg", "imgEmpty" : "North_Americm.jpg", "height": 1356, "width" : 1062, "hotspotFiles": ["countries", "towns", "rivers"],
+    "hotspotColor": "black",
+    "hotspotLocations": [[184, 92], [38, 1128]]
+  },
+  {  "name":  "Canada", "continent": "North_America", "dir" : "North_America/Canada/", "imgComp" : "Canada.jpg", "imgEmpty" : "Canadm.jpg", "height": 920, "width" : 980, "hotspotFiles": ["regions", "towns", "rivers"],
+    "hotspotColor": "darkgreen",
+    "hotspotLocations": [[135, 40], [33, 764]]
+  },
+  {  "name":  "Mexico", "continent": "North_America", "dir" : "North_America/Mexico/", "imgComp" : "mexico.jpg", "imgEmpty" : "mexicm.jpg", "height": 981, "width" : 1200, "hotspotFiles": ["regions", "towns", "rivers"],
+    "hotspotColor": "darkgreen",
+    "hotspotLocations": [[135, 40], [33, 764]]
+  },
+  {  "name":  "USA", "continent": "North_America", "dir" : "North_America/USA/", "imgComp" : "usa.jpg", "imgEmpty" : "usm.jpg", "height": 993,  "width" : 1350, "hotspotFiles": ["regions", "towns", "rivers"],
+    "hotspotColor": "black",
+    "hotspotLocations": [[663, 761], [750, 22]]
+  },
+  {  "name":  "Australia", "continent": "Oceania", "dir" : "Oceania/Australia/", "imgComp" : "Australia.jpg", "imgEmpty" : "Australim.jpg", "height": 1101,  "width" : 1025, "hotspotFiles": ["regions", "towns", "rivers"],
+    "hotspotColor": "darkgreen",
+    "hotspotLocations": [[347, 87], [335, 802]]
+  },
+  {  "name":  "South_America", "continent": "", "dir" : "South_America/", "imgComp" : "South_America.jpg", "imgEmpty" : "South_Americm.jpg", "height": 1348, "width" : 1062, "hotspotFiles": ["countries", "towns", "rivers"],
+    "hotspotColor": "black",
+    "hotspotLocations": [[535, 52], [512, 1170]]
+  },
+  {  "name":  "Argentina", "continent": "South_America", "dir" : "South_America/Argentina/", "imgComp" : "Argentina.jpg", "imgEmpty" : "Argentinm.jpg", "height": 1302, "width" : 1068, "hotspotFiles": ["regions", "towns"],
+    "hotspotColor": "darkgreen",
+    "hotspotLocations": [[581, 62], [512, 828]]
+  },
+  {  "name":  "Brazil", "continent": "South_America", "dir" : "South_America/Brazil/", "imgComp" : "Brazil.jpg", "imgEmpty" : "Brazim.jpg", "height": 1430, "width" : 1307, "hotspotFiles": ["regions", "towns", "rivers"],
+    "hotspotColor": "darkgreen",
+    "hotspotLocations": [[716, 21], [41, 1236]]
+  }
   ]
 }
