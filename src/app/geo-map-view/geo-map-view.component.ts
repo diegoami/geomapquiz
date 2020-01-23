@@ -3,6 +3,7 @@ import {GeoMap} from '../domain/geo-map';
 import {GeoMapService} from '../services/geo-map-service';
 import {SelectItem} from 'primeng';
 import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
+import {ActivatedRoute} from '@angular/router';
 
 
 @Component({
@@ -32,10 +33,15 @@ export class GeoMapViewComponent implements OnInit {
   dv: any;
 
 
-  constructor(private geoMapService: GeoMapService, @Inject(LOCAL_STORAGE) private storage: StorageService) {
+  constructor(private route: ActivatedRoute, private geoMapService: GeoMapService, @Inject(LOCAL_STORAGE) private storage: StorageService) {
   }
 
   ngOnInit() {
+
+    const searchpattern = this.route.snapshot.paramMap.get('searchpattern');
+    if (searchpattern) {
+      this.storage.set('filter', searchpattern);
+    }
     this.sortOptions = [
       {label: 'By Name Asc', value: 'name'},
       {label: 'By Name Desc', value: '!name'},

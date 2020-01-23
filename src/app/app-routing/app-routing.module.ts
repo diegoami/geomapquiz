@@ -15,6 +15,10 @@ const routes: Routes = [
     component: GeoMapViewComponent,
   },
   {
+    path: 'geomapview/:searchpattern',
+    component: GeoMapViewComponent,
+  },
+  {
     path: 'geomapdetail/:name/:hotspotfile',
     component: GeoMapDetailComponent
   }
