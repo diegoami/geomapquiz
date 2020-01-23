@@ -9,7 +9,16 @@ import { DialogModule } from 'primeng/dialog';
 import { AppComponent } from './app.component';
 import {AppRoutingModule} from './app-routing/app-routing.module';
 import { GeoMapViewComponent } from './geo-map-view/geo-map-view.component';
-import {CardModule, CheckboxModule, DataViewModule, DropdownModule, PanelModule, TabViewModule} from 'primeng';
+import {
+    CardModule,
+    CheckboxModule,
+    DataViewModule,
+    DropdownModule,
+    OverlayPanelModule,
+    PanelModule,
+    TabViewModule,
+    TooltipModule
+} from 'primeng';
 import {GeoMapService} from './services/geo-map-service';
 import { GeoMapDetailComponent } from './geo-map-detail/geo-map-detail.component';
 import { GeoMapCanvasComponent } from './geo-map-canvas/geo-map-canvas.component';
@@ -41,7 +50,9 @@ import {StorageServiceModule} from 'ngx-webstorage-service';
         ButtonModule,
         CardModule,
         CheckboxModule,
-        StorageServiceModule
+        StorageServiceModule,
+        TooltipModule,
+        OverlayPanelModule
     ],
     providers: [HttpClientModule, GeoMapService],
     bootstrap: [AppComponent]

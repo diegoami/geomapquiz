@@ -40,7 +40,7 @@ export class GeoMapDetailComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     const name = this.route.snapshot.paramMap.get('name');
     this.hotspotFile = this.route.snapshot.paramMap.get('hotspotfile');
-
+    this.mapDetailHeader = `${name} - ${this.hotspotFile}`;
     this.mapService.getMap(name).then(
         (geoMap) => this.geoMap = geoMap
     );
@@ -50,7 +50,7 @@ export class GeoMapDetailComponent implements OnInit, AfterViewInit {
   public ngAfterViewInit(): void {
     this.geoMapCanvasQueryList.changes.subscribe((comps: QueryList<GeoMapCanvasComponent>) => {
       this.geoMapCanvas = comps.first;
-      this.mapDetailHeader = `${this.geoMap.name} - ${this.hotspotFile}`;
+
       if (this.route.snapshot.queryParamMap.get('quiz') === '1') {
         this.geoMapCanvas.toggleQuizChecked();
         this.geoMapCanvas.updateImageSrc();
