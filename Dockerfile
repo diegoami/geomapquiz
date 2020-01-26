@@ -14,10 +14,14 @@ RUN rm -rf /usr/share/nginx/html/*
 
 COPY ./dev/nginx.conf /etc/nginx/nginx.conf
 
-COPY --from=build  /usr/angular-workdir/dist/angular-docker /usr/share/nginx/html
+COPY --from=build  /usr/angular-workdir/dist/geomapquiz /usr/share/nginx/html
+
+RUN adduser --system --no-create-home --shell /bin/false www
 
 RUN echo "mainFileName=\"\$(ls /usr/share/nginx/html/main*.js)\" && \
           envsubst '\$BACKEND_API_URL \$DEFAULT_LANGUAGE ' < \${mainFileName} > main.tmp && \
           mv main.tmp  \${mainFileName} && nginx -g 'daemon off;'" > run.sh
+
+
 
 ENTRYPOINT ["sh", "run.sh"]

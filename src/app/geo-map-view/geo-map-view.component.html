@@ -27,7 +27,7 @@
                     <div class="ui-g">
                         <p-panel header="{{geoMap.name}} {{geoMap.continent ? '('+geoMap.continent+')' : ''}}" [style]="{'text-align':'center'}">
                             <div class="geomap-detail" *ngFor="let hotspotFile of geoMap.hotspotFiles">
-                                <a href="geomapdetail/{{geoMap.name}}/{{hotspotFile}}">{{hotspotFile}}</a>
+                                <a routerLink="/geomapdetail/{{geoMap.name}}/{{hotspotFile}}">{{hotspotFile}}</a>
                             </div>
                         </p-panel>
 
