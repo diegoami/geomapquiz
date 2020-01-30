@@ -57,13 +57,27 @@ export class GeoMapCanvasComponent implements OnInit {
     if (!(['countries', 'regions']).includes(this.hotspotFile)) {
       this.fontForHotspot = '18px Verdana';
     }
+  }
 
+  getCurrentWidth(): number {
+    const currentWidth = Math.min(this.geoMap.width, innerWidth);
+    return currentWidth;
+  }
+
+  getScale():  number {
+    const scale = this.getCurrentWidth() / this.geoMap.width;
+    return scale;
+  }
+
+  getCurrentHeight(): number {
+
+    return this.geoMap.height * this.getScale();
   }
 
   loadImage(): void {
     this.image.onload = () => {
       console.log(`loading Image: ${this.geoMap.name}`)
-      this.ctx.drawImage(this.image, 0, 0, this.geoMap.width, this.geoMap.height);
+      this.ctx.drawImage(this.image, 0, 0, this.getCurrentWidth(), this.getCurrentHeight());
       if (Object.keys(this.paths).length === 0 || Object.keys(this.bboxes).length === 0) {
         this.loadHotspotsFromFile();
       }
@@ -147,13 +161,15 @@ export class GeoMapCanvasComponent implements OnInit {
   loadHotspotsInCanvas() {
     const min = Math.min;
     const max = Math.max;
-
+    const scale = this.getScale();
     for (const obj of this.hotspotList.hotspots) {
       const hotspot: Hotspot = <Hotspot>obj;
 
+
       const name = hotspot.hotspotName;
       if (hotspot.getShape() === 'circle') {
-        const [centerX, centerY, radius] = hotspot.getCoords(1)[0];
+        const [centerX, centerY, radius] = hotspot.getCoords(scale)[0];
+
         this.ctx.beginPath();
         this.paths.set(name, new Path2D());
         this.paths.get(name).arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
@@ -161,7 +177,7 @@ export class GeoMapCanvasComponent implements OnInit {
         this.ctx.closePath();
         this.bboxes.set(name, new BoundingBox(centerX - radius, centerY - radius, centerX + radius, centerY + radius ));
       } else {
-        const all_coords = hotspot.getCoords(1);
+        const all_coords = hotspot.getCoords(scale);
         let minX = 0, minY = 0, maxX = this.image.width, maxY = this.image.height;
         this.ctx.beginPath();
         this.ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
