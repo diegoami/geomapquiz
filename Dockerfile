@@ -13,6 +13,7 @@ FROM nginx:1.15.8-alpine
 RUN rm -rf /usr/share/nginx/html/*
 
 COPY ./dev/nginx.conf /etc/nginx/nginx.conf
+COPY ./dev/default /etc/nginx/sites-enabled/default
 
 COPY --from=build  /usr/angular-workdir/dist/geomapquiz /usr/share/nginx/html
 
