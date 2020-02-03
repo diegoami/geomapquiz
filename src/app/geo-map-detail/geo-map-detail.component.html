@@ -1,4 +1,4 @@
-<div *ngIf="geoMap && hotspotFile"  class="implementation content-section" >
+<div *ngIf="geoMap && hotspotFile"  >
   <div class="p-grid">
     <p-overlayPanel #opback>
       Go back to maps list
@@ -8,12 +8,7 @@
         <p-button icon="pi pi-step-backward" label="Back" routerLink="/geomapview" (mouseover)="opback.toggle($event)"></p-button>
       </h3>
     </div>
-    <div class="p-col-2" ptooltip="Find and click this on the map">
-        <p-overlayPanel #opmapdetail>
-            Click on {{hotspotFile}} matching this name
-        </p-overlayPanel>
-        <h2 [innerHtml]="mapDetailHeader"  (mouseover)="opmapdetail.toggle($event)"></h2>
-    </div>
+    <div class="p-col-1"></div>
       <div class="p-col-1">
           <h3>
               <p-overlayPanel #opmaphide>
@@ -22,6 +17,7 @@
               <p-button #quizButton icon="pi" label="Hidden"  (onClick)="toggleQuiz(geoMapCanvas, quizButton)" (mouseover)="opmaphide.toggle($event)"></p-button>
           </h3>
       </div>
+      <div class="p-col-1"></div>
       <div class="p-col-1">
           <h3>
               <p-overlayPanel #opquiz>
@@ -30,6 +26,14 @@
               <p-button #startQuizButton label="Start" styleClass="ui-button-success" (click)="startQuiz()" (mouseover)="opquiz.toggle($event)"></p-button>
           </h3>
       </div>
+      <div class="p-col-1"></div>
+      <div class="p-col-3" ptooltip="Find and click this on the map">
+          <p-overlayPanel #opmapdetail>
+              Click on {{hotspotFile}} matching this name
+          </p-overlayPanel>
+          <h2 [innerHtml]="mapDetailHeader"  (mouseover)="opmapdetail.toggle($event)"></h2>
+      </div>
+
   </div>
   <div class="p-grid">
       <app-geo-map-canvas #geoMapCanvas [geoMap]="geoMap" [hotspotFile]="hotspotFile" (guess)="onGuess($event)" ></app-geo-map-canvas>
