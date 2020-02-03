@@ -304,7 +304,7 @@ module.exports = "\n<router-outlet></router-outlet>\n"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<canvas #canvas height=\"{{geoMap.height}}\" width=\"{{geoMap.width}}\" ></canvas>\n"
+module.exports = "<canvas #canvas height=\"{{this.getCurrentHeight()}}\" width=\"{{this.getCurrentWidth()}}\" ></canvas>\n"
 
 /***/ }),
 
@@ -315,7 +315,7 @@ module.exports = "<canvas #canvas height=\"{{geoMap.height}}\" width=\"{{geoMap.
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"geoMap && hotspotFile\"  class=\"implementation content-section\" >\n  <div class=\"p-grid\">\n    <p-overlayPanel #opback>\n      Go back to maps list\n    </p-overlayPanel>\n    <div class=\"p-col-1\">\n      <h3>\n        <p-button icon=\"pi pi-step-backward\" label=\"Back\" routerLink=\"/geomapview\" (mouseover)=\"opback.toggle($event)\"></p-button>\n      </h3>\n    </div>\n    <div class=\"p-col-2\" ptooltip=\"Find and click this on the map\">\n        <p-overlayPanel #opmapdetail>\n            Click on {{hotspotFile}} matching this name\n        </p-overlayPanel>\n        <h2 [innerHtml]=\"mapDetailHeader\"  (mouseover)=\"opmapdetail.toggle($event)\"></h2>\n    </div>\n      <div class=\"p-col-1\">\n          <h3>\n              <p-overlayPanel #opmaphide>\n                  Show and hide {{hotspotFile}}\n              </p-overlayPanel>\n              <p-button #quizButton icon=\"pi\" label=\"Hidden\"  (onClick)=\"toggleQuiz(geoMapCanvas, quizButton)\" (mouseover)=\"opmaphide.toggle($event)\"></p-button>\n          </h3>\n      </div>\n      <div class=\"p-col-1\">\n          <h3>\n              <p-overlayPanel #opquiz>\n                  (Re)start the quiz\n              </p-overlayPanel>\n              <p-button #startQuizButton label=\"Start\" styleClass=\"ui-button-success\" (click)=\"startQuiz()\" (mouseover)=\"opquiz.toggle($event)\"></p-button>\n          </h3>\n      </div>\n  </div>\n  <div class=\"p-grid\">\n      <app-geo-map-canvas #geoMapCanvas [geoMap]=\"geoMap\" [hotspotFile]=\"hotspotFile\" (guess)=\"onGuess($event)\" ></app-geo-map-canvas>\n  </div>\n\n\n</div>\n"
+module.exports = "<div *ngIf=\"geoMap && hotspotFile\"  >\n  <div class=\"p-grid\">\n    <p-overlayPanel #opback>\n      Go back to maps list\n    </p-overlayPanel>\n    <div class=\"p-col-1\">\n      <h3>\n        <p-button icon=\"pi pi-step-backward\" label=\"Back\" routerLink=\"/geomapview\" (mouseover)=\"opback.toggle($event)\"></p-button>\n      </h3>\n    </div>\n    <div class=\"p-col-1\"></div>\n      <div class=\"p-col-1\">\n          <h3>\n              <p-overlayPanel #opmaphide>\n                  Show and hide {{hotspotFile}}\n              </p-overlayPanel>\n              <p-button #quizButton icon=\"pi\" label=\"Hidden\"  (onClick)=\"toggleQuiz(geoMapCanvas, quizButton)\" (mouseover)=\"opmaphide.toggle($event)\"></p-button>\n          </h3>\n      </div>\n      <div class=\"p-col-1\"></div>\n      <div class=\"p-col-1\">\n          <h3>\n              <p-overlayPanel #opquiz>\n                  (Re)start the quiz\n              </p-overlayPanel>\n              <p-button #startQuizButton label=\"Start\" styleClass=\"ui-button-success\" (click)=\"startQuiz()\" (mouseover)=\"opquiz.toggle($event)\"></p-button>\n          </h3>\n      </div>\n      <div class=\"p-col-1\"></div>\n      <div class=\"p-col-3\" ptooltip=\"Find and click this on the map\">\n          <p-overlayPanel #opmapdetail>\n              Click on {{hotspotFile}} matching this name\n          </p-overlayPanel>\n          <h2 [innerHtml]=\"mapDetailHeader\"  (mouseover)=\"opmapdetail.toggle($event)\"></h2>\n      </div>\n\n  </div>\n  <div class=\"p-grid\">\n      <app-geo-map-canvas #geoMapCanvas [geoMap]=\"geoMap\" [hotspotFile]=\"hotspotFile\" (guess)=\"onGuess($event)\" ></app-geo-map-canvas>\n  </div>\n\n\n</div>\n"
 
 /***/ }),
 
@@ -4220,11 +4220,22 @@ var GeoMapCanvasComponent = /** @class */ (function () {
             this.fontForHotspot = '18px Verdana';
         }
     };
+    GeoMapCanvasComponent.prototype.getCurrentWidth = function () {
+        var currentWidth = Math.min(this.geoMap.width, innerWidth);
+        return currentWidth;
+    };
+    GeoMapCanvasComponent.prototype.getScale = function () {
+        var scale = this.getCurrentWidth() / this.geoMap.width;
+        return scale;
+    };
+    GeoMapCanvasComponent.prototype.getCurrentHeight = function () {
+        return this.geoMap.height * this.getScale();
+    };
     GeoMapCanvasComponent.prototype.loadImage = function () {
         var _this = this;
         this.image.onload = function () {
             console.log("loading Image: " + _this.geoMap.name);
-            _this.ctx.drawImage(_this.image, 0, 0, _this.geoMap.width, _this.geoMap.height);
+            _this.ctx.drawImage(_this.image, 0, 0, _this.getCurrentWidth(), _this.getCurrentHeight());
             if (Object.keys(_this.paths).length === 0 || Object.keys(_this.bboxes).length === 0) {
                 _this.loadHotspotsFromFile();
             }
@@ -4294,11 +4305,12 @@ var GeoMapCanvasComponent = /** @class */ (function () {
         var _this = this;
         var min = Math.min;
         var max = Math.max;
+        var scale = this.getScale();
         var _loop_1 = function (obj) {
             var hotspot = obj;
             var name_1 = hotspot.hotspotName;
             if (hotspot.getShape() === 'circle') {
-                var _a = hotspot.getCoords(1)[0], centerX = _a[0], centerY = _a[1], radius = _a[2];
+                var _a = hotspot.getCoords(scale)[0], centerX = _a[0], centerY = _a[1], radius = _a[2];
                 this_1.ctx.beginPath();
                 this_1.paths.set(name_1, new Path2D());
                 this_1.paths.get(name_1).arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
@@ -4307,7 +4319,7 @@ var GeoMapCanvasComponent = /** @class */ (function () {
                 this_1.bboxes.set(name_1, new _domain_bounding_box__WEBPACK_IMPORTED_MODULE_3__["BoundingBox"](centerX - radius, centerY - radius, centerX + radius, centerY + radius));
             }
             else {
-                var all_coords = hotspot.getCoords(1);
+                var all_coords = hotspot.getCoords(scale);
                 var minX_1 = 0, minY_1 = 0, maxX_1 = this_1.image.width, maxY_1 = this_1.image.height;
                 this_1.ctx.beginPath();
                 this_1.ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
@@ -4436,7 +4448,7 @@ var GeoMapCanvasComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "button::after { content: ' '; width: 1px; height: 1px; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvZ2VvLW1hcC1kZXRhaWwvZ2VvLW1hcC1kZXRhaWwuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxnQkFBZ0IsWUFBWSxFQUFFLFVBQVUsRUFBRSxXQUFXLEVBQUUiLCJmaWxlIjoic3JjL2FwcC9nZW8tbWFwLWRldGFpbC9nZW8tbWFwLWRldGFpbC5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiYnV0dG9uOjphZnRlciB7IGNvbnRlbnQ6ICcgJzsgd2lkdGg6IDFweDsgaGVpZ2h0OiAxcHg7IH1cbiJdfQ== */"
+module.exports = "\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2dlby1tYXAtZGV0YWlsL2dlby1tYXAtZGV0YWlsLmNvbXBvbmVudC5jc3MifQ== */"
 
 /***/ }),
 
