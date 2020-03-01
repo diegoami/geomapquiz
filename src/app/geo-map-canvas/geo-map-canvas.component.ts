@@ -13,7 +13,12 @@ import {BoundingBox} from '../domain/bounding-box';
 
 
 
+
 export class GeoMapCanvasComponent implements OnInit {
+  BASE_HOTSPOT_FONT_SIZE = 24;
+  BASE_TOWN_FONT_SIZE = 18;
+
+  BASE_GUESS_FONT_SIZE = 30;
 
   private hotspotDefinition: string;
   private ctx: CanvasRenderingContext2D;
@@ -23,7 +28,6 @@ export class GeoMapCanvasComponent implements OnInit {
 
   private hiddenNames = false;
   quizChecked = false;
-  private fontForHotspot = '25px Verdana';
 
   private hotspotList: HotspotList;
   private currentHotspot: string;
@@ -54,9 +58,7 @@ export class GeoMapCanvasComponent implements OnInit {
     this.image.src = `assets/maps/${this.geoMap.dir}${this.geoMap.imgComp}`;
     this.loadHotspotsFromFile();
     this.loadImage();
-    if (!(['countries', 'regions']).includes(this.hotspotFile)) {
-      this.fontForHotspot = '18px Verdana';
-    }
+
   }
 
   getCurrentWidth(): number {
@@ -70,8 +72,24 @@ export class GeoMapCanvasComponent implements OnInit {
   }
 
   getCurrentHeight(): number {
-
     return this.geoMap.height * this.getScale();
+  }
+
+  getFontSizeForHotspot(): number {
+    let baseFontSize = this.BASE_HOTSPOT_FONT_SIZE;
+    if (!(['countries', 'regions']).includes(this.hotspotFile)) {
+      baseFontSize = this.BASE_TOWN_FONT_SIZE;
+    }
+    const realFontSize = Math.round(baseFontSize * this.getScale());
+    return realFontSize;
+
+  }
+
+  getFontSizeForGuess(): number {
+    const baseFontSize = this.BASE_GUESS_FONT_SIZE;
+    const realFontSize = Math.round(baseFontSize * this.getScale());
+    return realFontSize;
+
   }
 
   loadImage(): void {
@@ -127,15 +145,15 @@ export class GeoMapCanvasComponent implements OnInit {
 
   writeToGuessHotspot(): void {
     this.ctx.fillStyle = this.geoMap.hotspotColor;
-    this.ctx.font = '30px Verdana';
+    this.ctx.font = `${this.getFontSizeForGuess()}px Verdana`;
     const bheight = this.ctx.measureText('M').width;
-    this.ctx.fillText(this.toguessHotspot.toUpperCase(), this.geoMap.hotspotLocations[0][0] , this.geoMap.hotspotLocations[0][1] + bheight / 2);
-    this.ctx.fillText(this.toguessHotspot.toUpperCase(), this.geoMap.hotspotLocations[1][0] , this.geoMap.hotspotLocations[1][1] + bheight / 2);
+    this.ctx.fillText(this.toguessHotspot.toUpperCase(), this.geoMap.hotspotLocations[0][0] , this.geoMap.hotspotLocations[0][1] - bheight / 2);
+    this.ctx.fillText(this.toguessHotspot.toUpperCase(), this.geoMap.hotspotLocations[1][0] , this.geoMap.hotspotLocations[1][1] - bheight / 2);
   }
 
   writeCurrentHotspotName(hotspot: string): void {
     if (hotspot) {
-      this.ctx.font = this.fontForHotspot;
+      this.ctx.font = `${this.getFontSizeForHotspot()}px Verdana`;
       const bwidth = this.ctx.measureText(hotspot).width;
 
       this.ctx.fillStyle = this.redHotspots.includes(hotspot) ? 'red' : this.geoMap.hotspotColor;
@@ -154,8 +172,6 @@ export class GeoMapCanvasComponent implements OnInit {
 
     const current_img = this.hiddenNames ? this.geoMap.imgEmpty : this.geoMap.imgComp;
     this.image.src = `assets/maps/${this.geoMap.dir}${current_img}`;
-
-
   }
 
   loadHotspotsInCanvas() {
@@ -233,6 +249,14 @@ export class GeoMapCanvasComponent implements OnInit {
       }
     });
     this.updateImageSrc();
+  }
+
+  giveup() {
+    if (this.toguessHotspot) {
+      this.quizHotspots.push(this.toguessHotspot);
+    }
+    this.updateImageSrc();
+    this.guess.emit(this.toguessHotspot);
   }
 
   removeHotspot(key: string) {

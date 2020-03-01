@@ -1,43 +1,43 @@
-<div *ngIf="geoMap && hotspotFile"  >
-  <div class="p-grid">
-    <p-overlayPanel #opback>
-      Go back to maps list
-    </p-overlayPanel>
-    <div class="p-col-1">
-      <h3>
-        <p-button icon="pi pi-step-backward" label="Back" routerLink="/geomapview" (mouseover)="opback.toggle($event)"></p-button>
-      </h3>
-    </div>
-    <div class="p-col-1"></div>
-      <div class="p-col-1">
-          <h3>
-              <p-overlayPanel #opmaphide>
-                  Show and hide {{hotspotFile}}
-              </p-overlayPanel>
-              <p-button #quizButton icon="pi" label="Hidden"  (onClick)="toggleQuiz(geoMapCanvas, quizButton)" (mouseover)="opmaphide.toggle($event)"></p-button>
-          </h3>
-      </div>
-      <div class="p-col-1"></div>
-      <div class="p-col-1">
-          <h3>
-              <p-overlayPanel #opquiz>
-                  (Re)start the quiz
-              </p-overlayPanel>
-              <p-button #startQuizButton label="Start" styleClass="ui-button-success" (click)="startQuiz()" (mouseover)="opquiz.toggle($event)"></p-button>
-          </h3>
-      </div>
-      <div class="p-col-1"></div>
-      <div class="p-col-3" ptooltip="Find and click this on the map">
-          <p-overlayPanel #opmapdetail>
-              Click on {{hotspotFile}} matching this name
-          </p-overlayPanel>
-          <h2 [innerHtml]="mapDetailHeader"  (mouseover)="opmapdetail.toggle($event)"></h2>
-      </div>
+<div *ngIf="geoMap && hotspotFile">
+    <div class="p-grid">
+        <div class="p-col-1">
+            <p-overlayPanel #opback>
+                Go back to maps list
+            </p-overlayPanel>
 
-  </div>
-  <div class="p-grid">
-      <app-geo-map-canvas #geoMapCanvas [geoMap]="geoMap" [hotspotFile]="hotspotFile" (guess)="onGuess($event)" ></app-geo-map-canvas>
-  </div>
+            <p-button icon="pi pi-step-backward" label="Back" styleClass="ui-button-secondary" routerLink="/geomapview"
+                      (mouseover)="opback.toggle($event)"></p-button>
+        </div>
+        <div class="p-col-1"></div>
+        <div *ngIf="quizMode" class="p-col-1">
+            <p-overlayPanel #opmaphide>
+                Go back and show {{hotspotFile}}
+            </p-overlayPanel>
+            <p-button #stopQuizButton icon="pi pi-times" label="Stop" styleClass="ui-button-danger"
+                      (onClick)="toggleQuiz(geoMapCanvas, quizButton)"
+                      (mouseover)="opmaphide.toggle($event)"></p-button>
+        </div>
+        <div *ngIf="!quizMode" class="p-col-1">
+            <p-overlayPanel #opquiz>
+                (Re)start the quiz
+            </p-overlayPanel>
+            <p-button #startQuizButton icon="pi pi-replay" label="Start" styleClass="ui-button-success"
+                      (click)="startQuiz()" (mouseover)="opquiz.toggle($event)"></p-button>
+        </div>
+        <div class="p-col-1"></div>
+        <div *ngIf="quizMode" class="p-col-1" >
+            <p-overlayPanel #opmapdetail>
+                Click on {{hotspotFile}} matching this name, or on this button to give up
+            </p-overlayPanel>
+            <p-button #quizButton icon="pi pi-cloud" label="{{mapDetailHeader}}"
+                      (onClick)="giveup()" (mouseover)="opmapdetail.toggle($event)"></p-button>
+        </div>
+
+    </div>
+    <div class="p-grid">
+        <app-geo-map-canvas #geoMapCanvas [geoMap]="geoMap" [hotspotFile]="hotspotFile"
+                            (guess)="onGuess($event)"></app-geo-map-canvas>
+    </div>
 
 
 </div>

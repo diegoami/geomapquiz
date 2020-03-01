@@ -17,7 +17,7 @@ export class GeoMapDetailComponent implements OnInit, AfterViewInit {
   private geoMap: GeoMap;
   hotspotFile: string;
   quiz = 0;
-  startVisible = false;
+  quizMode = false;
   hotspotToGuess = '';
   mapDetailHeader = '';
 
@@ -54,25 +54,19 @@ export class GeoMapDetailComponent implements OnInit, AfterViewInit {
       if (this.route.snapshot.queryParamMap.get('quiz') === '1') {
         this.geoMapCanvas.toggleQuizChecked();
         this.geoMapCanvas.updateImageSrc();
-        this.startVisible = true;
+        this.quizMode = true;
       }
     });
     this.quizButtonQueryList.changes.subscribe((comps: QueryList<Button>) => {
       this.quizButton = comps.first;
-      if (this.route.snapshot.queryParamMap.get('quiz') === '1') {
-        this.quizButton.icon = `pi pi-check`;
-        this.quizButton.label = `Quiz`;
-      }
     });
   }
 
   toggleQuiz(geoMapCanvas: GeoMapCanvasComponent, pbutton: Button ) {
     const quizMode = geoMapCanvas.toggleQuizChecked();
     geoMapCanvas.updateImageSrc();
-    console.log(`toggleQuiz: ${quizMode}`)
-    pbutton.icon = quizMode ? `pi pi-check` : `pi`;
     this.mapDetailHeader = quizMode ? `` : `${this.geoMap.name} - ${this.hotspotFile}`;
-    this.startVisible = quizMode;
+    this.quizMode = quizMode;
   }
 
   goBack() {
@@ -100,5 +94,10 @@ export class GeoMapDetailComponent implements OnInit, AfterViewInit {
       console.log(`Removing hotspot: ${key}, should have guessed ${this.hotspotToGuess}`)
       setTimeout(() => this.geoMapCanvas.removeHotspot(key), 500);
     }
+  }
+
+  giveup(): void {
+    this.geoMapCanvas.giveup();
+
   }
 }
