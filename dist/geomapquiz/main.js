@@ -315,7 +315,7 @@ module.exports = "<canvas #canvas height=\"{{this.getCurrentHeight()}}\" width=\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"geoMap && hotspotFile\"  >\n  <div class=\"p-grid\">\n    <p-overlayPanel #opback>\n      Go back to maps list\n    </p-overlayPanel>\n    <div class=\"p-col-1\">\n      <h3>\n        <p-button icon=\"pi pi-step-backward\" label=\"Back\" routerLink=\"/geomapview\" (mouseover)=\"opback.toggle($event)\"></p-button>\n      </h3>\n    </div>\n    <div class=\"p-col-1\"></div>\n      <div class=\"p-col-1\">\n          <h3>\n              <p-overlayPanel #opmaphide>\n                  Show and hide {{hotspotFile}}\n              </p-overlayPanel>\n              <p-button #quizButton icon=\"pi\" label=\"Hidden\"  (onClick)=\"toggleQuiz(geoMapCanvas, quizButton)\" (mouseover)=\"opmaphide.toggle($event)\"></p-button>\n          </h3>\n      </div>\n      <div class=\"p-col-1\"></div>\n      <div class=\"p-col-1\">\n          <h3>\n              <p-overlayPanel #opquiz>\n                  (Re)start the quiz\n              </p-overlayPanel>\n              <p-button #startQuizButton label=\"Start\" styleClass=\"ui-button-success\" (click)=\"startQuiz()\" (mouseover)=\"opquiz.toggle($event)\"></p-button>\n          </h3>\n      </div>\n      <div class=\"p-col-1\"></div>\n      <div class=\"p-col-3\" ptooltip=\"Find and click this on the map\">\n          <p-overlayPanel #opmapdetail>\n              Click on {{hotspotFile}} matching this name\n          </p-overlayPanel>\n          <h2 [innerHtml]=\"mapDetailHeader\"  (mouseover)=\"opmapdetail.toggle($event)\"></h2>\n      </div>\n\n  </div>\n  <div class=\"p-grid\">\n      <app-geo-map-canvas #geoMapCanvas [geoMap]=\"geoMap\" [hotspotFile]=\"hotspotFile\" (guess)=\"onGuess($event)\" ></app-geo-map-canvas>\n  </div>\n\n\n</div>\n"
+module.exports = "<div *ngIf=\"geoMap && hotspotFile\">\n    <div class=\"p-grid\">\n        <div class=\"p-col-1\">\n            <p-overlayPanel #opback>\n                Go back to maps list\n            </p-overlayPanel>\n\n            <p-button icon=\"pi pi-step-backward\" label=\"Back\" styleClass=\"ui-button-secondary\" routerLink=\"/geomapview\"\n                      (mouseover)=\"opback.toggle($event)\"></p-button>\n        </div>\n        <div class=\"p-col-1\"></div>\n        <div *ngIf=\"quizMode\" class=\"p-col-1\">\n            <p-overlayPanel #opmaphide>\n                Go back and show {{hotspotFile}}\n            </p-overlayPanel>\n            <p-button #stopQuizButton icon=\"pi pi-times\" label=\"Stop\" styleClass=\"ui-button-danger\"\n                      (onClick)=\"toggleQuiz(geoMapCanvas, quizButton)\"\n                      (mouseover)=\"opmaphide.toggle($event)\"></p-button>\n        </div>\n        <div *ngIf=\"!quizMode\" class=\"p-col-1\">\n            <p-overlayPanel #opquiz>\n                (Re)start the quiz\n            </p-overlayPanel>\n            <p-button #startQuizButton icon=\"pi pi-replay\" label=\"Start\" styleClass=\"ui-button-success\"\n                      (click)=\"startQuiz()\" (mouseover)=\"opquiz.toggle($event)\"></p-button>\n        </div>\n        <div class=\"p-col-1\"></div>\n        <div *ngIf=\"quizMode\" class=\"p-col-1\" >\n            <p-overlayPanel #opmapdetail>\n                Click on {{hotspotFile}} matching this name, or on this button to give up\n            </p-overlayPanel>\n            <p-button #quizButton icon=\"pi pi-cloud\" label=\"{{mapDetailHeader}}\"\n                      (onClick)=\"giveup()\" (mouseover)=\"opmapdetail.toggle($event)\"></p-button>\n        </div>\n\n    </div>\n    <div class=\"p-grid\">\n        <app-geo-map-canvas #geoMapCanvas [geoMap]=\"geoMap\" [hotspotFile]=\"hotspotFile\"\n                            (guess)=\"onGuess($event)\"></app-geo-map-canvas>\n    </div>\n\n\n</div>\n"
 
 /***/ }),
 
@@ -4199,11 +4199,13 @@ __webpack_require__.r(__webpack_exports__);
 var GeoMapCanvasComponent = /** @class */ (function () {
     function GeoMapCanvasComponent(hotspotService) {
         this.hotspotService = hotspotService;
+        this.BASE_HOTSPOT_FONT_SIZE = 24;
+        this.BASE_TOWN_FONT_SIZE = 18;
+        this.BASE_GUESS_FONT_SIZE = 30;
         this.paths = new Map();
         this.bboxes = new Map();
         this.hiddenNames = false;
         this.quizChecked = false;
-        this.fontForHotspot = '25px Verdana';
         this.quizHotspots = [];
         this.availableHotspots = [];
         this.redHotspots = [];
@@ -4216,9 +4218,6 @@ var GeoMapCanvasComponent = /** @class */ (function () {
         this.image.src = "assets/maps/" + this.geoMap.dir + this.geoMap.imgComp;
         this.loadHotspotsFromFile();
         this.loadImage();
-        if (!(['countries', 'regions']).includes(this.hotspotFile)) {
-            this.fontForHotspot = '18px Verdana';
-        }
     };
     GeoMapCanvasComponent.prototype.getCurrentWidth = function () {
         var currentWidth = Math.min(this.geoMap.width, innerWidth);
@@ -4230,6 +4229,19 @@ var GeoMapCanvasComponent = /** @class */ (function () {
     };
     GeoMapCanvasComponent.prototype.getCurrentHeight = function () {
         return this.geoMap.height * this.getScale();
+    };
+    GeoMapCanvasComponent.prototype.getFontSizeForHotspot = function () {
+        var baseFontSize = this.BASE_HOTSPOT_FONT_SIZE;
+        if (!(['countries', 'regions']).includes(this.hotspotFile)) {
+            baseFontSize = this.BASE_TOWN_FONT_SIZE;
+        }
+        var realFontSize = Math.round(baseFontSize * this.getScale());
+        return realFontSize;
+    };
+    GeoMapCanvasComponent.prototype.getFontSizeForGuess = function () {
+        var baseFontSize = this.BASE_GUESS_FONT_SIZE;
+        var realFontSize = Math.round(baseFontSize * this.getScale());
+        return realFontSize;
     };
     GeoMapCanvasComponent.prototype.loadImage = function () {
         var _this = this;
@@ -4278,14 +4290,14 @@ var GeoMapCanvasComponent = /** @class */ (function () {
     };
     GeoMapCanvasComponent.prototype.writeToGuessHotspot = function () {
         this.ctx.fillStyle = this.geoMap.hotspotColor;
-        this.ctx.font = '30px Verdana';
+        this.ctx.font = this.getFontSizeForGuess() + "px Verdana";
         var bheight = this.ctx.measureText('M').width;
-        this.ctx.fillText(this.toguessHotspot.toUpperCase(), this.geoMap.hotspotLocations[0][0], this.geoMap.hotspotLocations[0][1] + bheight / 2);
-        this.ctx.fillText(this.toguessHotspot.toUpperCase(), this.geoMap.hotspotLocations[1][0], this.geoMap.hotspotLocations[1][1] + bheight / 2);
+        this.ctx.fillText(this.toguessHotspot.toUpperCase(), this.geoMap.hotspotLocations[0][0], this.geoMap.hotspotLocations[0][1] - bheight / 2);
+        this.ctx.fillText(this.toguessHotspot.toUpperCase(), this.geoMap.hotspotLocations[1][0], this.geoMap.hotspotLocations[1][1] - bheight / 2);
     };
     GeoMapCanvasComponent.prototype.writeCurrentHotspotName = function (hotspot) {
         if (hotspot) {
-            this.ctx.font = this.fontForHotspot;
+            this.ctx.font = this.getFontSizeForHotspot() + "px Verdana";
             var bwidth = this.ctx.measureText(hotspot).width;
             this.ctx.fillStyle = this.redHotspots.includes(hotspot) ? 'red' : this.geoMap.hotspotColor;
             var currentBoundingBox = this.bboxes.get(hotspot);
@@ -4380,6 +4392,13 @@ var GeoMapCanvasComponent = /** @class */ (function () {
             }
         });
         this.updateImageSrc();
+    };
+    GeoMapCanvasComponent.prototype.giveup = function () {
+        if (this.toguessHotspot) {
+            this.quizHotspots.push(this.toguessHotspot);
+        }
+        this.updateImageSrc();
+        this.guess.emit(this.toguessHotspot);
     };
     GeoMapCanvasComponent.prototype.removeHotspot = function (key) {
         if (this.quizChecked) {
@@ -4477,7 +4496,7 @@ var GeoMapDetailComponent = /** @class */ (function () {
         this.mapService = mapService;
         this.router = router;
         this.quiz = 0;
-        this.startVisible = false;
+        this.quizMode = false;
         this.hotspotToGuess = '';
         this.mapDetailHeader = '';
     }
@@ -4495,24 +4514,18 @@ var GeoMapDetailComponent = /** @class */ (function () {
             if (_this.route.snapshot.queryParamMap.get('quiz') === '1') {
                 _this.geoMapCanvas.toggleQuizChecked();
                 _this.geoMapCanvas.updateImageSrc();
-                _this.startVisible = true;
+                _this.quizMode = true;
             }
         });
         this.quizButtonQueryList.changes.subscribe(function (comps) {
             _this.quizButton = comps.first;
-            if (_this.route.snapshot.queryParamMap.get('quiz') === '1') {
-                _this.quizButton.icon = "pi pi-check";
-                _this.quizButton.label = "Quiz";
-            }
         });
     };
     GeoMapDetailComponent.prototype.toggleQuiz = function (geoMapCanvas, pbutton) {
         var quizMode = geoMapCanvas.toggleQuizChecked();
         geoMapCanvas.updateImageSrc();
-        console.log("toggleQuiz: " + quizMode);
-        pbutton.icon = quizMode ? "pi pi-check" : "pi";
         this.mapDetailHeader = quizMode ? "" : this.geoMap.name + " - " + this.hotspotFile;
-        this.startVisible = quizMode;
+        this.quizMode = quizMode;
     };
     GeoMapDetailComponent.prototype.goBack = function () {
         this.router.navigateByUrl('geomapview');
@@ -4538,6 +4551,9 @@ var GeoMapDetailComponent = /** @class */ (function () {
             console.log("Removing hotspot: " + key + ", should have guessed " + this.hotspotToGuess);
             setTimeout(function () { return _this.geoMapCanvas.removeHotspot(key); }, 500);
         }
+    };
+    GeoMapDetailComponent.prototype.giveup = function () {
+        this.geoMapCanvas.giveup();
     };
     GeoMapDetailComponent.ctorParameters = function () { return [
         { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"] },
