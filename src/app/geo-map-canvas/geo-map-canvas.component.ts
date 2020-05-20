@@ -145,24 +145,31 @@ export class GeoMapCanvasComponent implements OnInit {
 
   writeToGuessHotspot(): void {
     this.ctx.fillStyle = this.geoMap.hotspotColor;
+
     this.ctx.font = `${this.getFontSizeForGuess()}px Verdana`;
-    const bheight = this.ctx.measureText('M').width;
-    this.ctx.fillText(this.toguessHotspot.toUpperCase(), this.geoMap.hotspotLocations[0][0] , this.geoMap.hotspotLocations[0][1] - bheight / 2);
-    this.ctx.fillText(this.toguessHotspot.toUpperCase(), this.geoMap.hotspotLocations[1][0] , this.geoMap.hotspotLocations[1][1] - bheight / 2);
+
+    this.ctx.textBaseline = "top";
+    this.ctx.textAlign = "left";
+    this.ctx.fillText(this.toguessHotspot.toUpperCase(), this.geoMap.hotspotLocations[0][0] , this.geoMap.hotspotLocations[0][1] );
+    this.ctx.fillText(this.toguessHotspot.toUpperCase(), this.geoMap.hotspotLocations[1][0] , this.geoMap.hotspotLocations[1][1] );
   }
 
   writeCurrentHotspotName(hotspot: string): void {
     if (hotspot) {
       this.ctx.font = `${this.getFontSizeForHotspot()}px Verdana`;
-      const bwidth = this.ctx.measureText(hotspot).width;
+      //const bwidth = this.ctx.measureText(hotspot).width;
+      const bwidth = 0;
 
       this.ctx.fillStyle = this.redHotspots.includes(hotspot) ? 'red' : this.geoMap.hotspotColor;
       const currentBoundingBox = this.bboxes.get(hotspot);
 
       const centerVerticalBoundingBox = (currentBoundingBox.bottom - currentBoundingBox.top) / 2 + currentBoundingBox.top;
       const centerHorizontalBoundingBox = (currentBoundingBox.right - currentBoundingBox.left) / 2 + currentBoundingBox.left;
-      const startCaption = centerHorizontalBoundingBox - bwidth / 2;
-      this.ctx.fillText(hotspot, startCaption, centerVerticalBoundingBox);
+
+      this.ctx.textBaseline = "top";
+      this.ctx.textAlign = "center";
+
+      this.ctx.fillText(hotspot, centerHorizontalBoundingBox, centerVerticalBoundingBox);
       this.ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
     }
   }
