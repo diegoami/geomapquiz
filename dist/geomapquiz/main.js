@@ -4291,20 +4291,23 @@ var GeoMapCanvasComponent = /** @class */ (function () {
     GeoMapCanvasComponent.prototype.writeToGuessHotspot = function () {
         this.ctx.fillStyle = this.geoMap.hotspotColor;
         this.ctx.font = this.getFontSizeForGuess() + "px Verdana";
-        var bheight = this.ctx.measureText('M').width;
-        this.ctx.fillText(this.toguessHotspot.toUpperCase(), this.geoMap.hotspotLocations[0][0], this.geoMap.hotspotLocations[0][1] - bheight / 2);
-        this.ctx.fillText(this.toguessHotspot.toUpperCase(), this.geoMap.hotspotLocations[1][0], this.geoMap.hotspotLocations[1][1] - bheight / 2);
+        this.ctx.textBaseline = "top";
+        this.ctx.textAlign = "left";
+        this.ctx.fillText(this.toguessHotspot.toUpperCase(), this.geoMap.hotspotLocations[0][0], this.geoMap.hotspotLocations[0][1]);
+        this.ctx.fillText(this.toguessHotspot.toUpperCase(), this.geoMap.hotspotLocations[1][0], this.geoMap.hotspotLocations[1][1]);
     };
     GeoMapCanvasComponent.prototype.writeCurrentHotspotName = function (hotspot) {
         if (hotspot) {
             this.ctx.font = this.getFontSizeForHotspot() + "px Verdana";
-            var bwidth = this.ctx.measureText(hotspot).width;
+            //const bwidth = this.ctx.measureText(hotspot).width;
+            var bwidth = 0;
             this.ctx.fillStyle = this.redHotspots.includes(hotspot) ? 'red' : this.geoMap.hotspotColor;
             var currentBoundingBox = this.bboxes.get(hotspot);
             var centerVerticalBoundingBox = (currentBoundingBox.bottom - currentBoundingBox.top) / 2 + currentBoundingBox.top;
             var centerHorizontalBoundingBox = (currentBoundingBox.right - currentBoundingBox.left) / 2 + currentBoundingBox.left;
-            var startCaption = centerHorizontalBoundingBox - bwidth / 2;
-            this.ctx.fillText(hotspot, startCaption, centerVerticalBoundingBox);
+            this.ctx.textBaseline = "top";
+            this.ctx.textAlign = "center";
+            this.ctx.fillText(hotspot, centerHorizontalBoundingBox, centerVerticalBoundingBox);
             this.ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
         }
     };
